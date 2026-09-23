@@ -23,7 +23,7 @@
 
 ## 安装
 
-本插件通过市场 `local-team` 提供。市场源是GitHub 上的仓库（`http://localhost:3000/Himmeltala/claude-marketplace.git`，对应工作副本 `~/projs/自用项目/claude-marketplace`）：
+本插件通过市场 `local-team` 提供。市场源是GitHub 上的仓库（`http://localhost:3000/Himmeltala/claude-marketplace.git`，对应工作副本 `~/projs/自用项目/local-team`）：
 
 ```bash
 claude plugin marketplace add http://localhost:3000/Himmeltala/claude-marketplace.git
@@ -70,7 +70,7 @@ claude plugin uninstall svn-team-conventions@local-team
 
 ## 维护
 
-插件源在 `~/projs/自用项目/claude-marketplace/plugins/svn-workflow/`，整个市场目录是一个 git 仓库，远端在GitHub：
+插件源在 `~/projs/自用项目/local-team/plugins/svn-workflow/`，整个市场目录是一个 git 仓库，远端在GitHub：
 
 ```bash
 git remote -v      # origin  ssh://git@localhost:2222/Himmeltala/claude-marketplace.git
