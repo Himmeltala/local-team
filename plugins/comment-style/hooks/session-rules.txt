@@ -1,0 +1,5 @@
+注释约定（comment-style 插件，全程适用）：
+
+- 注释稀疏优先：默认可不写。禁 emoji，禁 `====` / `****` 分割线，禁 ★✅🚀 这类无义装饰，禁箭头（`→` 及箭头区 `←` 到 `⇿`），承义也不例外。注释不复述代码，只讲"为什么"。承义的话用文字写：写 `regionId 映射到 orgCode`、`(KB) 换算成 GB`、`在线转离线`，不要用箭头省字。横幅注释只剥 `====` 装饰、留住句子。
+- 本次编辑碰到的文件，顺手把该文件里的乱注释整文件清干净；没编辑过的文件不碰。清理动到本次改动之外时，在提交信息那一行里带上"顺带清理注释"。功能性指令（eslint-disable、@SuppressWarnings、noinspection）和 TODO / FIXME 永远不删。
+- Java 字段用 @ApiModelProperty、控制层方法用 @ApiOperation 表达，不要改成 Javadoc；Service 方法与私有方法不加注解。Vue / JS 文件头注释块由 eslint 强制，必须保留。详见 comment-style 技能。

@@ -1,20 +1,40 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "local-team",
-  "description": "本地团队插件市场。存放本单位私有约定（SVN 工作流、注释规范等），不对外发布。",
+  "description": "本地团队插件市场。存放本单位私有约定（版本控制工作流、注释规范、中文表达规范），不对外发布。",
   "owner": {
     "name": "Himmeltala"
   },
   "plugins": [
     {
-      "name": "svn-workflow",
-      "description": "SVN 项目的团队工作流插件。提交前检查、commit 信息格式（单行简短，前缀 + 中文描述）、SVN 命令速查、冲突处理；注释保持稀疏、禁 emoji 与装饰符号，编辑文件时顺手清干净；另有中文表达与理解规范。仅在 SVN 项目里启用。",
+      "name": "control-workflow",
+      "description": "版本控制工作流：SVN 提交前的检查与硬闸门（提交前强制 update、冲突清零、单行 commit 信息格式）、SVN 命令速查、冲突与编码踩坑处理。将来加入 git 对应的提交流程。只在 SVN 项目里启用。",
       "author": {
         "name": "Himmeltala"
       },
       "category": "workflow",
-      "keywords": ["svn", "commit", "comments", "conventions", "java", "vue", "chinese"],
-      "source": "./plugins/svn-workflow"
+      "keywords": ["svn", "git", "commit", "version-control", "workflow"],
+      "source": "./plugins/control-workflow"
+    },
+    {
+      "name": "comment-style",
+      "description": "注释规范：稀疏优先，默认可不写；禁 emoji、装饰分割线与符号代字；编辑某个文件时顺手把该文件整文件清干净，另配 comment-trimmer 子代理做整目录的存量批量清理。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "conventions",
+      "keywords": ["comments", "conventions", "java", "vue", "cleanup"],
+      "source": "./plugins/comment-style"
+    },
+    {
+      "name": "chinese-writing",
+      "description": "中文表达与理解规范：介词、量词、关联词写全，语序按中文，术语统一，禁符号代字，中英混排加空格；读中文需求遇歧义先复述确认。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "conventions",
+      "keywords": ["chinese", "writing", "documentation", "style"],
+      "source": "./plugins/chinese-writing"
     }
   ]
 }

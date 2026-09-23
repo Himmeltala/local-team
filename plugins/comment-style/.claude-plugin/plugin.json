@@ -1,0 +1,10 @@
+{
+  "name": "comment-style",
+  "version": "0.1.0",
+  "description": "团队注释规范：稀疏优先，默认可不写；禁 emoji、装饰分割线、符号代字；编辑某个文件时顺手把该文件整文件清干净，另配 comment-trimmer 子代理做整目录的存量批量清理。",
+  "author": {
+    "name": "Himmeltala"
+  },
+  "keywords": ["comments", "conventions", "java", "vue", "cleanup"],
+  "license": "UNLICENSED"
+}

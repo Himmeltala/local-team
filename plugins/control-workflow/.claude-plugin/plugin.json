@@ -1,0 +1,10 @@
+{
+  "name": "control-workflow",
+  "version": "0.1.0",
+  "description": "版本控制工作流插件：SVN 提交前的检查与硬闸门（提交前强制 update、冲突清零、单行 commit 信息格式）、SVN 命令速查、冲突与编码踩坑处理。将来加入 git 对应的提交流程。只在 SVN 项目里启用。",
+  "author": {
+    "name": "Himmeltala"
+  },
+  "keywords": ["svn", "git", "commit", "version-control", "workflow"],
+  "license": "UNLICENSED"
+}

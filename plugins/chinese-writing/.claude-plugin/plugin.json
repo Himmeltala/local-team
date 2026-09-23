@@ -1,0 +1,10 @@
+{
+  "name": "chinese-writing",
+  "version": "0.1.0",
+  "description": "中文表达与理解规范：介词、量词、关联词写全，语序按中文，术语统一，禁符号代字，中英混排加空格；读中文需求遇歧义先复述确认，不按英文语序猜意图。",
+  "author": {
+    "name": "Himmeltala"
+  },
+  "keywords": ["chinese", "writing", "documentation", "style"],
+  "license": "UNLICENSED"
+}

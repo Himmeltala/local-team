@@ -133,4 +133,4 @@ fix: 门禁记录统计接口补齐无数据的区域与操作类型
 
 - `references/commit-message-format.md`——前缀含义、单行写法、更多正反例。
 
-改代码时同时遵守注释规范，见 `comment-style` 技能。
+改代码时同时遵守注释规范，见 `comment-style` 插件。

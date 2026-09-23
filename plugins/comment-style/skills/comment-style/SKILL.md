@@ -19,7 +19,7 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 2. **不用符号装饰。** 禁 emoji，禁 `=====` / `*****` / `-----` 分割线，禁 ASCII 艺术，禁 `★ ✅ ❌ 🚀` 这类无义装饰。
 3. **注释不许复述代码。** 写在 `setName()` 上方的 `// 设置 name` 是噪音，删。
 
-**符号与箭头的通用规则以 `chinese-writing` 技能为准**（通用层只写一份，避免两处口径漂移）。落到注释上的要点：注释里禁 `→`，禁整个箭头区 `←` 到 `⇿`，承义也不例外——符号不承义，句子才承义。原来靠箭头省的字，改写成文字：
+**符号与箭头的通用规则以 `chinese-writing` 插件为准**（通用层只写一份，避免两处口径漂移）。落到注释上的要点：注释里禁 `→`，禁整个箭头区 `←` 到 `⇿`，承义也不例外——符号不承义，句子才承义。原来靠箭头省的字，改写成文字：
 
 - `regionId → orgCode` 写成 `regionId 映射到 orgCode` 或 `regionId 对应 orgCode`
 - `(KB) → GB` 写成 `(KB) 换算成 GB`
@@ -57,7 +57,7 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 
 这样定的理由是文件级一致性：清一半的文件比不清更麻烦——下一个改它的人得重新判断哪些注释该留，判断标准还会漂。整文件一次清完，从此是干净的基线。
 
-代价是 diff 变大。只要清理动到了本次改动之外的注释，就在那唯一一行提交信息里带上"顺带清理注释"，别让清理变成隐形改动。提交信息不能另起一行说明（见 `svn-commit`）。
+代价是 diff 变大。只要清理动到了本次改动之外的注释，就在那唯一一行提交信息里带上"顺带清理注释"，别让清理变成隐形改动。提交信息不能另起一行说明（见 `control-workflow` 插件的 `svn-commit` 技能）。
 
 删什么、留什么、判断边界，以 `references/trim-rules.md` 为准——`comment-trimmer` 子代理也以同一份为准。三条永远不删：
 
@@ -80,4 +80,4 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 - `references/xml-sql-conventions.md`
 - `references/trim-rules.md`——删什么、留什么、边界判断（裁剪的权威文件）
 
-提交代码时同时遵守提交格式，见 `svn-commit` 技能。
+提交代码时同时遵守提交格式，见 `control-workflow` 插件的 `svn-commit` 技能。

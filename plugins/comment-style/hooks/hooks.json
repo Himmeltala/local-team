@@ -1,0 +1,17 @@
+{
+  "description": "会话开始时注入注释规范提醒",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/session-rules.sh\"",
+            "timeout": 10,
+            "statusMessage": "载入注释规范..."
+          }
+        ]
+      }
+    ]
+  }
+}
