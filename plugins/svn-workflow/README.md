@@ -1,6 +1,8 @@
-# svn-team-conventions
+# svn-workflow
 
-本团队（SVN 工作流 + Java/Vue 双栈）的提交与注释约定插件。全局生效，不绑定单个项目。
+本团队 SVN 项目的团队约定插件：提交工作流、注释规范、中文表达规范。只对 SVN 项目有意义，工作副本不在版本控制之下的项目不需要装。
+
+插件不绑定某一个仓库，团队现有的 SVN 项目与新建的 SVN 项目都用同一套。
 
 ## 解决什么问题
 
@@ -25,7 +27,19 @@
 
 ```bash
 claude plugin marketplace add http://localhost:3000/Himmeltala/claude-marketplace.git
-claude plugin install svn-team-conventions@local-team
+claude plugin install svn-workflow@local-team
+```
+
+只有在 SVN 项目里想启用、其它项目不启用时，加 `-s project` 装到项目级（在项目目录下执行）：
+
+```bash
+claude plugin install svn-workflow@local-team -s project
+```
+
+改名之前装过旧名字（`svn-team-conventions`）的，先卸掉旧的那份再装新的：
+
+```bash
+claude plugin uninstall svn-team-conventions@local-team
 ```
 
 `marketplace add` 只认 `http(s)://`、GitHub 的 `owner/repo` 和本地路径，`ssh://` 会被判成非法格式——尽管 仓库页面上给的是 SSH 地址。拉取走 HTTP，仓库是公开的；推送仍走 SSH（`ssh://git@localhost:2222/Himmeltala/claude-marketplace.git`，端口 2222）。
@@ -36,7 +50,7 @@ claude plugin install svn-team-conventions@local-team
 
 技能多数会自动触发，也可以显式调用：
 
-- `/svn-team-conventions:svn-commit` —— 走一遍提交流程并生成提交信息
+- `/svn-workflow:svn-commit` —— 走一遍提交流程并生成提交信息
 - 说"注释太乱帮我清一下" —— 触发 `comment-style` 的裁剪规则
 - 说"把 xxx 模块的乱注释批量清掉" —— 派 `comment-trimmer` 子代理
 
@@ -56,18 +70,18 @@ claude plugin install svn-team-conventions@local-team
 
 ## 维护
 
-插件源在 `~/.claude/local-marketplace/plugins/svn-team-conventions/`，整个市场目录是一个 git 仓库，远端在GitHub：
+插件源在 `~/.claude/local-marketplace/plugins/svn-workflow/`，整个市场目录是一个 git 仓库，远端在GitHub：
 
 ```bash
 git remote -v      # origin  ssh://git@localhost:2222/Himmeltala/claude-marketplace.git
 ```
 
-安装时文件是**复制**到 `~/.claude/plugins/cache/local-team/svn-team-conventions/<version>/` 的，改源目录不会自动生效。改完内容后：
+安装时文件是**复制**到 `~/.claude/plugins/cache/local-team/svn-workflow/<version>/` 的，改源目录不会自动生效。改完内容后：
 
 1. 提高 `.claude-plugin/plugin.json` 里的 `version`（例如从 `0.5.0` 提到 `0.6.0`）。版本号不变时 `claude plugin update` 会判定"已是最新"而不重新复制，这一步不能省。
 2. `git add -A && git commit -m "<type>: <说明>" && git push` —— 内容必须先到远端，本地文件不参与安装。
 3. `claude plugin marketplace update local-team` —— 重新 clone 市场仓库，刷新目录清单。
-4. `claude plugin update svn-team-conventions@local-team`
+4. `claude plugin update svn-workflow@local-team`
 5. 重启 Claude Code 会话（钩子只在会话启动时加载）。
 
 这套步骤 2026-09-23 实测通过：更新后缓存目录与源目录 `diff -rq` 一致。旧版本目录会留在缓存里，不影响加载，可以忽略。

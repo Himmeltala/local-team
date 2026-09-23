@@ -7,14 +7,14 @@
   },
   "plugins": [
     {
-      "name": "svn-team-conventions",
-      "description": "SVN 提交工作流与团队注释规范。提交前检查、commit 信息格式（单行简短，前缀 + 中文描述）、SVN 命令速查、冲突处理；注释保持稀疏、禁 emoji 与装饰符号，编辑文件时顺手裁剪密集乱注释。",
+      "name": "svn-workflow",
+      "description": "SVN 项目的团队工作流插件。提交前检查、commit 信息格式（单行简短，前缀 + 中文描述）、SVN 命令速查、冲突处理；注释保持稀疏、禁 emoji 与装饰符号，编辑文件时顺手清干净；另有中文表达与理解规范。仅在 SVN 项目里启用。",
       "author": {
         "name": "Himmeltala"
       },
       "category": "workflow",
-      "keywords": ["svn", "commit", "comments", "conventions", "java", "vue"],
-      "source": "./plugins/svn-team-conventions"
+      "keywords": ["svn", "commit", "comments", "conventions", "java", "vue", "chinese"],
+      "source": "./plugins/svn-workflow"
     }
   ]
 }

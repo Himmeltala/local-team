@@ -1,0 +1,10 @@
+{
+  "name": "svn-workflow",
+  "version": "0.9.0",
+  "description": "SVN 项目的团队工作流插件：提交前强制 update 与冲突清零（钩子拦截）、单行 commit 信息格式、SVN 命令速查、冲突处理、稀疏注释规则与整文件注释裁剪、中文表达与理解规范。仅在 SVN 项目里启用。",
+  "author": {
+    "name": "Himmeltala"
+  },
+  "keywords": ["svn", "commit", "comments", "conventions", "java", "vue", "chinese"],
+  "license": "UNLICENSED"
+}

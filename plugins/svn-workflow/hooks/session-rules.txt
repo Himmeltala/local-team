@@ -1,4 +1,4 @@
-团队约定（svn-team-conventions 插件，全程适用）：
+团队约定（svn-workflow 插件，SVN 项目全程适用）：
 
 - 版本控制是 SVN，不是 git。用 svn status / diff / log / update / commit。不建分支、不建 PR、不写 Co-Authored-By 尾注。动手前先 svn info 确认工作副本。
 - **提交前必须先 `svn update`，冲突清零才提交**：`svn status` 里还有标 `C` 的文件、或工作副本落后于服务器时，`svn commit` 会被插件的 PreToolUse 钩子直接拦下（退出码 2）。冲突要手工打开文件清掉 `<<<<<<<` / `=======` / `>>>>>>>` 再 `svn resolve --accept=working`，钩子不会替你改工作副本。
