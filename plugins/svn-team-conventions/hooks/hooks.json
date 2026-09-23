@@ -1,0 +1,29 @@
+{
+  "description": "会话开始时注入团队约定提醒；提交前拦下三种 svn commit：工作副本落后于服务器、有未解决冲突、提交信息前缀带范围括号",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/session-rules.sh\"",
+            "timeout": 10,
+            "statusMessage": "载入团队约定..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/commit-guard.sh\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "local-team",
+  "description": "本地团队插件市场。存放本单位私有约定（SVN 工作流、注释规范等），不对外发布。",
+  "owner": {
+    "name": "Himmeltala"
+  },
+  "plugins": [
+    {
+      "name": "svn-team-conventions",
+      "description": "SVN 提交工作流与团队注释规范。提交前检查、commit 信息格式（单行简短，前缀 + 中文描述）、SVN 命令速查、冲突处理；注释保持稀疏、禁 emoji 与装饰符号，编辑文件时顺手裁剪密集乱注释。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "workflow",
+      "keywords": ["svn", "commit", "comments", "conventions", "java", "vue"],
+      "source": "./plugins/svn-team-conventions"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+团队约定（svn-team-conventions 插件，全程适用）：
+
+- 版本控制是 SVN，不是 git。用 svn status / diff / log / update / commit。不建分支、不建 PR、不写 Co-Authored-By 尾注。动手前先 svn info 确认工作副本。
+- **提交前必须先 `svn update`，冲突清零才提交**：`svn status` 里还有标 `C` 的文件、或工作副本落后于服务器时，`svn commit` 会被插件的 PreToolUse 钩子直接拦下（退出码 2）。冲突要手工打开文件清掉 `<<<<<<<` / `=======` / `>>>>>>>` 再 `svn resolve --accept=working`，钩子不会替你改工作副本。
+- 提交信息**只有一行**，必须简短：`<type>: <中文描述>`，冒号半角加空格。**前缀后面不加范围括号**，不要写 `feat(xxx): xxx` 这种，要指明模块就写进中文描述里（`fix: 门禁记录统计接口补齐...`）；这条有钩子兜底，`-m` / `--message` / `-F` 文件首行里出现范围括号会被直接拦下。不写第二行、不写正文或列表。历史提交里的多行正文是旧做法，不要跟着学。详见 svn-commit 技能。
+- 注释稀疏优先：默认可不写。禁 emoji，禁 `====` / `****` 分割线，禁 ★✅🚀 这类无义装饰，禁箭头（`→` 及箭头区 `←` 到 `⇿`），承义也不例外。注释不复述代码，只讲"为什么"。承义的话用文字写：写 `regionId 映射到 orgCode`、`(KB) 换算成 GB`、`在线转离线`，不要用箭头省字。横幅注释只剥 `====` 装饰、留住句子。
+- 改到某块代码时顺手清理该块内的乱注释，范围不出改动块；清理量大时在提交信息那一行里带上"顺带清理注释"。功能性指令（eslint-disable、@SuppressWarnings、noinspection）和 TODO / FIXME 永远不删。
+- Java 字段用 @ApiModelProperty、控制层方法用 @ApiOperation 表达，不要改成 Javadoc；Service 方法与私有方法不加注解。Vue / JS 文件头注释块由 eslint 强制，必须保留。详见 comment-style 技能。

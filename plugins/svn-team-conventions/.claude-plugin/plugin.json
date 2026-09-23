@@ -1,0 +1,10 @@
+{
+  "name": "svn-team-conventions",
+  "version": "0.6.0",
+  "description": "SVN 提交工作流与团队注释规范：提交前强制 update 与冲突清零（钩子拦截）、单行 commit 信息格式、SVN 命令速查、冲突处理、稀疏注释规则与密集注释裁剪。",
+  "author": {
+    "name": "Himmeltala"
+  },
+  "keywords": ["svn", "commit", "comments", "conventions", "java", "vue"],
+  "license": "UNLICENSED"
+}
