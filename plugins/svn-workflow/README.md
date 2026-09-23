@@ -23,10 +23,10 @@
 
 ## 安装
 
-本插件通过市场 `local-team` 提供。市场源是GitHub 上的仓库（`http://localhost:3000/Himmeltala/claude-marketplace.git`，对应工作副本 `~/projs/自用项目/local-team`）：
+本插件通过市场 `local-team` 提供。市场源是GitHub 上的仓库（`https://github.com/Himmeltala/local-team.git`，对应工作副本 `~/projs/自用项目/local-team`）：
 
 ```bash
-claude plugin marketplace add http://localhost:3000/Himmeltala/claude-marketplace.git
+claude plugin marketplace add https://github.com/Himmeltala/local-team.git
 claude plugin install svn-workflow@local-team
 ```
 
@@ -42,7 +42,7 @@ claude plugin install svn-workflow@local-team -s project
 claude plugin uninstall svn-team-conventions@local-team
 ```
 
-`marketplace add` 只认 `http(s)://`、GitHub 的 `owner/repo` 和本地路径，`ssh://` 会被判成非法格式——尽管 仓库页面上给的是 SSH 地址。拉取走 HTTP，仓库是公开的；推送仍走 SSH（`ssh://git@localhost:2222/Himmeltala/claude-marketplace.git`，端口 2222）。
+`marketplace add` 只认 `http(s)://`、GitHub 的 `owner/repo` 和本地路径，`ssh://` 会被判成非法格式——尽管 仓库页面上给的是 SSH 地址。拉取走 HTTP，仓库是公开的；推送仍走 SSH（`git@github.com:Himmeltala/local-team.git`，端口 2222）。
 
 改完插件内容后需要重启会话生效（钩子在会话启动时加载）。
 
@@ -73,7 +73,7 @@ claude plugin uninstall svn-team-conventions@local-team
 插件源在 `~/projs/自用项目/local-team/plugins/svn-workflow/`，整个市场目录是一个 git 仓库，远端在GitHub：
 
 ```bash
-git remote -v      # origin  ssh://git@localhost:2222/Himmeltala/claude-marketplace.git
+git remote -v      # origin  git@github.com:Himmeltala/local-team.git
 ```
 
 安装时文件是**复制**到 `~/.claude/plugins/cache/local-team/svn-workflow/<version>/` 的，改源目录不会自动生效。改完内容后：
