@@ -20,12 +20,14 @@
 
 ## 安装
 
-本插件通过本地市场 `local-team` 提供：
+本插件通过市场 `local-team` 提供。市场源是GitHub 上的仓库（`http://localhost:3000/Himmeltala/claude-marketplace.git`，对应工作副本 `~/.claude/local-marketplace`）：
 
 ```bash
-claude plugin marketplace add ~/.claude/local-marketplace
+claude plugin marketplace add http://localhost:3000/Himmeltala/claude-marketplace.git
 claude plugin install svn-team-conventions@local-team
 ```
+
+`marketplace add` 只认 `http(s)://`、GitHub 的 `owner/repo` 和本地路径，`ssh://` 会被判成非法格式——尽管 仓库页面上给的是 SSH 地址。拉取走 HTTP，仓库是公开的；推送仍走 SSH（`ssh://git@localhost:2222/Himmeltala/claude-marketplace.git`，端口 2222）。
 
 改完插件内容后需要重启会话生效（钩子在会话启动时加载）。
 
@@ -79,18 +81,23 @@ claude plugin install svn-team-conventions@local-team
 
 ## 维护
 
-插件源在 `~/.claude/local-marketplace/plugins/svn-team-conventions/`。该目录未纳入版本控制——如需备份或共享，自行加入 SVN。
+插件源在 `~/.claude/local-marketplace/plugins/svn-team-conventions/`，整个市场目录是一个 git 仓库，远端在GitHub：
+
+```bash
+git remote -v      # origin  ssh://git@localhost:2222/Himmeltala/claude-marketplace.git
+```
 
 安装时文件是**复制**到 `~/.claude/plugins/cache/local-team/svn-team-conventions/<version>/` 的，改源目录不会自动生效。改完内容后：
 
-1. 提高 `.claude-plugin/plugin.json` 里的 `version`（例如从 `0.3.0` 提到 `0.4.0`）。版本号不变时 `claude plugin update` 会判定"已是最新"而不重新复制，这一步不能省。
-2. `claude plugin marketplace update local-team` —— 刷新本地目录市场的目录清单。
-3. `claude plugin update svn-team-conventions@local-team`
-4. 重启 Claude Code 会话（钩子只在会话启动时加载）。
+1. 提高 `.claude-plugin/plugin.json` 里的 `version`（例如从 `0.5.0` 提到 `0.6.0`）。版本号不变时 `claude plugin update` 会判定"已是最新"而不重新复制，这一步不能省。
+2. `git add -A && git commit -m "<type>: <说明>" && git push` —— 内容必须先到远端，本地文件不参与安装。
+3. `claude plugin marketplace update local-team` —— 重新 clone 市场仓库，刷新目录清单。
+4. `claude plugin update svn-team-conventions@local-team`
+5. 重启 Claude Code 会话（钩子只在会话启动时加载）。
 
 这套步骤 2026-09-23 实测通过：更新后缓存目录与源目录 `diff -rq` 一致。旧版本目录会留在缓存里，不影响加载，可以忽略。
 
-只改 `hooks/session-rules.txt` 的提示语时，也可以直接编辑缓存目录里那份并重启会话，跳过上面三步；但下次更新会被覆盖，源目录要同步改。
+只改 `hooks/session-rules.txt` 的提示语时，也可以直接编辑缓存目录里那份并重启会话，跳过上面三步；但下次更新会被覆盖，源目录要同步改并推送。
 
 ## 调整约定
 
