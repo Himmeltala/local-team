@@ -12,10 +12,10 @@
 
 ## 安装
 
-市场源是GitHub 上的仓库，对应工作副本 `~/projs/自用项目/local-team`：
+市场源是 GitHub 上的 `Himmeltala/local-team` 仓库，对应工作副本 `~/projs/自用项目/local-team`：
 
 ```bash
-claude plugin marketplace add https://github.com/Himmeltala/local-team.git
+claude plugin marketplace add Himmeltala/local-team
 claude plugin install comment-style@local-team
 ```
 

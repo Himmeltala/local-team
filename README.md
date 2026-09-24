@@ -1,6 +1,6 @@
 # local-team
 
-本地团队插件市场。存放本单位私有约定，不对外发布。市场里三个插件互相独立，按项目情况挑着装。
+本地团队插件市场。存放本单位自用约定，仓库托管在 GitHub 上，内容只服务本单位的使用场景。市场里三个插件互相独立，按项目情况挑着装。
 
 | 插件 | 管什么 | 什么时候装 |
 |---|---|---|
@@ -10,10 +10,10 @@
 
 ## 安装
 
-市场源是GitHub 上的仓库，对应工作副本 `~/projs/自用项目/local-team`：
+市场源是 GitHub 上的 `Himmeltala/local-team` 仓库，对应工作副本 `~/projs/自用项目/local-team`：
 
 ```bash
-claude plugin marketplace add https://github.com/Himmeltala/local-team.git
+claude plugin marketplace add Himmeltala/local-team
 claude plugin install control-workflow@local-team
 claude plugin install comment-style@local-team
 claude plugin install chinese-writing@local-team
@@ -42,7 +42,7 @@ local-team/
 
 ## 维护
 
-市场工作副本在 `~/projs/自用项目/local-team`，整个市场是一个 git 仓库，远端在GitHub：
+市场工作副本在 `~/projs/自用项目/local-team`，整个市场是一个 git 仓库，远端在 GitHub：
 
 ```
 git@github.com:Himmeltala/local-team.git
@@ -56,7 +56,7 @@ git@github.com:Himmeltala/local-team.git
 4. `claude plugin update <插件名>@local-team`
 5. 重启 Claude Code 会话（钩子只在会话启动时加载）。
 
-拉取走 HTTP（`https://github.com/Himmeltala/local-team.git`），推送走 SSH（端口 2222）。`marketplace add` 只认 `http(s)://`、GitHub 的 `owner/repo` 和本地路径，`ssh://` 会被判成非法格式——尽管 仓库页面上给的是 SSH 地址。
+拉取走 HTTPS（`https://github.com/Himmeltala/local-team.git`），推送走 SSH（`git@github.com:Himmeltala/local-team.git`）。`marketplace add` 对 GitHub 认 `owner/repo` 简写，直接写 `ssh://` 地址会被判成非法格式。
 
 只改某个插件 `hooks/session-rules.txt` 的提示语时，也可以直接编辑缓存目录里那份并重启会话，跳过第 2 到第 4 步；但下次更新会被覆盖，源目录要同步改并推送。
 
