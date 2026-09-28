@@ -1,0 +1,10 @@
+{
+  "name": "mock-testing",
+  "version": "0.1.0",
+  "description": "拿桩把功能链路跑通的套路：划清各端哪些真跑哪些做桩、从源码抄契约、纯标准库写桩、改地址指到桩上、分三层验证、收尾还原。配 HTTP 桩、假上游、WebSocket 观察器与起停脚本四份可照抄模板。",
+  "author": {
+    "name": "Himmeltala"
+  },
+  "keywords": ["mock", "stub", "testing", "local", "fault-injection"],
+  "license": "UNLICENSED"
+}

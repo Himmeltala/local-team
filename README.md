@@ -1,12 +1,13 @@
 # local-team
 
-本地团队插件市场。存放本单位自用约定，仓库托管在 GitHub 上，内容只服务本单位的使用场景。市场里三个插件互相独立，按项目情况挑着装。
+本地团队插件市场。存放本单位自用约定，仓库托管在 GitHub 上，内容只服务本单位的使用场景。市场里四个插件互相独立，按项目情况挑着装。
 
 | 插件 | 管什么 | 什么时候装 |
 |---|---|---|
 | `control-workflow` | 版本控制工作流：SVN 与 git 两套提交流程的检查与硬闸门、commit 信息格式、命令速查、冲突与撤销踩坑 | 用 SVN 或 git 管的项目都装，按工作副本类型分流 |
 | `comment-style` | 注释规范：稀疏优先、禁装饰、编辑文件时整文件顺手清干净、整目录批量清理的子代理 | 所有 Java / Vue 项目 |
 | `chinese-writing` | 中文表达与理解：介词、量词、关联词、语序、术语、禁符号代字、中英混排空格 | 所有项目 |
+| `mock-testing` | 拿桩把功能链路跑通的套路：划端、抄契约、写桩、接管地址、三层验证、收尾还原，配四份可照抄模板 | 需要频繁在本地或测试环境复现链路问题的项目 |
 
 ## 安装
 
@@ -17,6 +18,7 @@ claude plugin marketplace add Himmeltala/local-team
 claude plugin install control-workflow@local-team
 claude plugin install comment-style@local-team
 claude plugin install chinese-writing@local-team
+claude plugin install mock-testing@local-team
 ```
 
 只想在部分项目里启用时，在该项目目录下加 `-s project` 装到项目级：
@@ -31,11 +33,12 @@ claude plugin install control-workflow@local-team -s project
 
 ```
 local-team/
-├── .claude-plugin/marketplace.json   市场清单，声明三个插件
+├── .claude-plugin/marketplace.json   市场清单，声明四个插件
 └── plugins/
     ├── control-workflow/   版本控制工作流（技能、提交闸门钩子、验收测试）
     ├── comment-style/      注释规范（技能、comment-trimmer 子代理）
-    └── chinese-writing/    中文表达与理解（技能）
+    ├── chinese-writing/    中文表达与理解（技能）
+    └── mock-testing/       拿桩跑通链路（技能、四份模板脚本）
 ```
 
 每个插件目录下都有自己的 README 与 `docs/maintainer-notes.md`。技能、子代理、钩子都按插件独立加载，互不引用对方的文件。

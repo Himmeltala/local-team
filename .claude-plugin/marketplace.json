@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "local-team",
-  "description": "本地团队插件市场。存放本单位自用约定（版本控制工作流、注释规范、中文表达规范），仓库托管在 GitHub 上。",
+  "description": "本地团队插件市场。存放本单位自用约定（版本控制工作流、注释规范、中文表达规范）与拿桩跑通链路的套路，仓库托管在 GitHub 上。",
   "owner": {
     "name": "Himmeltala"
   },
@@ -35,6 +35,16 @@
       "category": "conventions",
       "keywords": ["chinese", "writing", "documentation", "style"],
       "source": "./plugins/chinese-writing"
+    },
+    {
+      "name": "mock-testing",
+      "description": "拿桩把功能链路跑通的套路：划清各端哪些真跑哪些做桩、从被替换方源码抄契约、纯标准库写桩、把地址指到桩上、分三层验证、收尾还原。配契约清单、接管手段、验证收尾与踩坑四份参考，以及 HTTP 桩、假上游桩、WebSocket 观察器、起停脚本四份可照抄模板。对端未就绪、不可达或缺硬件时用。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "testing",
+      "keywords": ["mock", "stub", "testing", "local", "fault-injection"],
+      "source": "./plugins/mock-testing"
     }
   ]
 }
