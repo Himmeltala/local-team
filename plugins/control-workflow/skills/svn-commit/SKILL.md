@@ -1,7 +1,7 @@
 ---
 name: svn-commit
 description: 当用户要求提交代码到版本库、写提交说明、查看工作副本改动、解决更新冲突、回滚撤销改动时使用；触发词包括"提交"、"提交代码"、"svn commit"、"commit 一下"、"改了什么"、"svn status"、"svn diff"、"svn log"、"拉最新代码"、"更新一下代码"、"冲突了"、"回滚"、"撤销修改"、"看历史"。也用于用户误用 git（git diff/log/commit、分支、PR）需要纠正的场合。
-argument-hint: [要提交的路径，或本次改动的一句话说明]
+argument-hint: "[要提交的路径] [本次改动的一句话说明]"
 allowed-tools: [Bash, Read, Grep, Glob]
 ---
 
@@ -17,13 +17,14 @@ allowed-tools: [Bash, Read, Grep, Glob]
 
 - 绝不用 `git diff` / `git log` / `git status` / `git commit` / `git blame`。
 - 不创建分支，不建 PR，不写 git 的 `Co-Authored-By` 尾注。
+- **工作副本是 git 仓库（目录下有 `.git`）时换 `git-commit` 技能**，不要拿这一套去套 git 仓库。两者提交信息格式相同，命令与前置检查不同。
 - **先 `svn info` 定位工作副本。** 工作区根目录本身通常不是工作副本，只有含 `.svn` 的项目子目录才是。版本库可达性用 `svn info <URL>` 测，报错即不通。
 - 不要凭记忆写路径。项目会越来越多，路径按当前 `svn info` 的输出为准。
 
 ## 提交流程
 
 **闸门：先 `svn update`，冲突清零。** 这两件事没做完，不要执行 `svn commit`。插件装了
-PreToolUse 钩子（`hooks/scripts/commit-guard.sh`），会在提交前跑一次 `svn status -u`：
+PreToolUse 钩子（`hooks/scripts/svn-commit-guard.sh`），会在提交前跑一次 `svn status -u`：
 工作副本落后于服务器，或 `svn status` 里还有标 `C` 的文件，提交直接被拦下——钩子以退出码 2
 结束，把原因和该做的事打回来。钩子只拦不改，工作副本始终由你按下面的步骤处理。
 

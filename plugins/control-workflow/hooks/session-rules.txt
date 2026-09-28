@@ -1,5 +1,5 @@
-版本控制约定（control-workflow 插件，SVN 项目全程适用）：
+版本控制约定（control-workflow 插件，两种工作副本都适用）：
 
-- 版本控制是 SVN，不是 git。用 svn status / diff / log / update / commit。不建分支、不建 PR、不写 Co-Authored-By 尾注。动手前先 svn info 确认工作副本。
-- **提交前必须先 `svn update`，冲突清零才提交**：`svn status` 里还有标 `C` 的文件、或工作副本落后于服务器时，`svn commit` 会被插件的 PreToolUse 钩子直接拦下（退出码 2）。冲突要手工打开文件清掉 `<<<<<<<` / `=======` / `>>>>>>>` 再 `svn resolve --accept=working`，钩子不会替你改工作副本。
-- 提交信息**只有一行**，必须简短：`<type>: <中文描述>`，冒号半角加空格。**前缀后面不加范围括号**，不要写 `feat(xxx): xxx` 这种，要指明模块就写进中文描述里（`fix: 门禁记录统计接口补齐...`）；这条有钩子兜底，`-m` / `--message` / `-F` 文件首行里出现范围括号会被直接拦下。不写第二行、不写正文或列表。历史提交里的多行正文是旧做法，不要跟着学。详见 svn-commit 技能。
+- **先认清是哪一个版本控制系统**：目录下有 `.svn` 就是 SVN，用 svn status / diff / log / update / commit；有 `.git` 就是 git，用 git status / diff / log / fetch / add / commit / push。两套别混着用。自用项目各仓库直接在 main 上提交，不建分支、不建 PR、不写 Co-Authored-By 尾注。动手前先 `svn info` 或 `git status -sb` 确认。
+- **提交前先拉最新，冲突清零才提交**：SVN 走 `svn update`，git 走 `git fetch` 再看是否落后，落后或分叉就先 `git pull --rebase`。落后、冲突、分叉这几种情况会被插件的 PreToolUse 钩子拦下（退出码 2）。钩子只拦不改，update 与解决冲突由助手手工做完。**推送要用户明确要求才做。**
+- 提交信息**只有一行**，必须简短：`<type>: <中文描述>`，冒号半角加空格。**前缀后面不加范围括号**，不要写 `feat(xxx): xxx` 这种，要指明模块就写进中文描述里（`fix: 门禁记录统计接口补齐...`）；这条有钩子兜底。不写第二行、不写正文或列表，一行说不清就拆成多次提交。详见 svn-commit 与 git-commit 技能。

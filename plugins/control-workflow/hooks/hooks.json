@@ -1,5 +1,5 @@
 {
-  "description": "会话开始时注入版本控制约定；提交前拦下三种 svn commit：工作副本落后于服务器、有未解决冲突、提交信息前缀带范围括号",
+  "description": "会话开始时注入版本控制约定；提交前拦下两种提交：svn commit（落后于服务器、有未解决冲突、前缀带范围括号）、git commit（前缀带范围括号、信息不是单行、没给信息、detached HEAD、落后或分叉于远端）",
   "hooks": {
     "SessionStart": [
       {
@@ -19,7 +19,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/commit-guard.sh\"",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/svn-commit-guard.sh\"",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/git-commit-guard.sh\"",
             "timeout": 60
           }
         ]

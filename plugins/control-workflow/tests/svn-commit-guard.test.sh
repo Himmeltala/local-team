@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# commit-guard.sh 的验收测试。每次跑都重建 /tmp/svnguard 下的临时版本库，
+# svn-commit-guard.sh 的验收测试。每次跑都重建 /tmp/svnguard 下的临时版本库，
 # 造出「落后服务器」「冲突未解决」等真实状态，不碰任何真实工作副本。
 #
-# 用法（在插件根目录下）：bash tests/commit-guard.test.sh hooks/scripts/commit-guard.sh
+# 用法（在插件根目录下）：bash tests/svn-commit-guard.test.sh hooks/scripts/svn-commit-guard.sh
 
 set -uo pipefail
 
-GUARD="${1:?用法: bash tests/commit-guard.test.sh <commit-guard.sh 路径>}"
+GUARD="${1:?用法: bash tests/svn-commit-guard.test.sh <svn-commit-guard.sh 路径>}"
 ROOT=/tmp/svnguard
 R="$ROOT/repo"
 WA="$ROOT/wc-a"

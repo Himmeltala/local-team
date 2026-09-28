@@ -1,7 +1,7 @@
 ---
 name: comment-style
 description: 编写、修改或审查 Java、Vue、JavaScript 代码时使用，保证注释符合团队稀疏规范；也用于用户说"注释太乱"、"注释太多"、"注释密密麻麻"、"清理注释"、"裁剪注释"、"去掉 emoji"、"注释规范"的场合。
-argument-hint: [要处理的文件或目录]
+argument-hint: "[要处理的文件或目录]"
 allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 ---
 
