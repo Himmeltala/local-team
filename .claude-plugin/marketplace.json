@@ -84,6 +84,22 @@
         "sql"
       ],
       "source": "./plugins/bug-tracing"
+    },
+    {
+      "name": "code-shaping",
+      "description": "编码思维：写之前先找项目已有的机制与公共函数；一个函数一件事，过长就拆；胶水代码优先泛化；模式用来隔离变化点；同时不许过度抽象（只有一处用到的不抽，抽象比调用处还长就退回）。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "conventions",
+      "keywords": [
+        "coding",
+        "refactoring",
+        "reuse",
+        "abstraction",
+        "design-patterns"
+      ],
+      "source": "./plugins/code-shaping"
     }
   ]
 }

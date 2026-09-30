@@ -1,6 +1,6 @@
 # local-team
 
-本地团队插件市场。存放本单位自用约定，仓库托管在 GitHub 上，内容只服务本单位的使用场景。市场里五个插件互相独立，按项目情况挑着装。
+本地团队插件市场。存放本单位自用约定，仓库托管在 GitHub 上，内容只服务本单位的使用场景。市场里六个插件互相独立，按项目情况挑着装。
 
 | 插件 | 管什么 | 什么时候装 |
 |---|---|---|
@@ -9,6 +9,7 @@
 | `chinese-writing` | 中文表达与理解：介词、量词、关联词、语序、术语、篇幅、禁符号代字与翻译腔 | 所有项目 |
 | `mock-testing` | 拿模拟服务把功能链路跑通的套路：划边界、抄契约、写模拟服务、接管地址、三层验证、收尾还原，配四份可照抄模板 | 需要频繁在本地或测试环境复现链路问题的项目 |
 | `bug-tracing` | 问题排查：先沿调用链读代码，逻辑排除干净再查数据源，需要时经授权连库取部分数据作证 | 所有项目 |
+| `code-shaping` | 编码思维：复用优先、一个函数一件事、过长就拆、胶水代码泛化、模式用得其所、不许过度抽象 | 所有项目 |
 
 ## 安装
 
@@ -21,6 +22,7 @@ claude plugin install comment-trimming@local-team
 claude plugin install chinese-writing@local-team
 claude plugin install mock-testing@local-team
 claude plugin install bug-tracing@local-team
+claude plugin install code-shaping@local-team
 ```
 
 只想在部分项目里启用时，在该项目目录下加 `-s project` 装到项目级：
@@ -53,6 +55,7 @@ claude plugin install comment-trimming@local-team
 /chinese-writing:chinese-writing     走一遍中文表达规范
 /mock-testing:mock-testing           走一遍拿模拟服务跑通链路的流程
 /bug-tracing:bug-tracing             走一遍问题排查流程
+/code-shaping:code-shaping           走一遍编码思维判断清单
 ```
 
 各插件目录下另有自己的 README，讲该插件的用法。

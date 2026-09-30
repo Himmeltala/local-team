@@ -1,0 +1,17 @@
+{
+  "description": "会话开始时注入编码思维约定",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/session-rules.sh\"",
+            "timeout": 10,
+            "statusMessage": "载入编码思维约定..."
+          }
+        ]
+      }
+    ]
+  }
+}
