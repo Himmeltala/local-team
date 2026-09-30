@@ -68,6 +68,22 @@
         "fault-injection"
       ],
       "source": "./plugins/mock-testing"
+    },
+    {
+      "name": "bug-tracing",
+      "description": "问题排查：先沿代码调用链逐段核对，逻辑排除干净后再查数据源，需要时经授权连库取部分数据作证。数据库只读，连库前先问清环境、库名与库类型；结论只在会话里给，不落盘。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "debugging",
+      "keywords": [
+        "debugging",
+        "tracing",
+        "call-chain",
+        "data-source",
+        "sql"
+      ],
+      "source": "./plugins/bug-tracing"
     }
   ]
 }
