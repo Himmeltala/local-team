@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "local-team",
-  "description": "本地团队插件市场。存放本单位自用约定（版本控制工作流、注释规范、中文表达规范）与拿桩跑通链路的套路，仓库托管在 GitHub 上。",
+  "description": "本地团队插件市场。存放本单位自用约定（版本控制工作流、注释规范、中文表达规范）与拿模拟服务跑通链路的套路，仓库托管在 GitHub 上。",
   "owner": {
     "name": "Himmeltala"
   },
@@ -13,17 +13,29 @@
         "name": "Himmeltala"
       },
       "category": "workflow",
-      "keywords": ["svn", "git", "commit", "version-control", "workflow"],
+      "keywords": [
+        "svn",
+        "git",
+        "commit",
+        "version-control",
+        "workflow"
+      ],
       "source": "./plugins/commit-guarding"
     },
     {
       "name": "comment-trimming",
-      "description": "注释规范：稀疏优先，默认可不写；禁 emoji、装饰分割线与符号代字；编辑某个文件时顺手把该文件整文件清干净，另配 comment-trimmer 子代理做整目录的存量批量清理。",
+      "description": "注释规范：稀疏优先，默认可不写；只讲本段代码、不记调用链；篇幅一行最多两行；禁 emoji 与装饰分割线；编辑某个文件时顺手把该文件整文件清干净，另配 comment-trimmer 子代理做整目录的存量批量清理。",
       "author": {
         "name": "Himmeltala"
       },
       "category": "conventions",
-      "keywords": ["comments", "conventions", "java", "vue", "cleanup"],
+      "keywords": [
+        "comments",
+        "conventions",
+        "java",
+        "vue",
+        "cleanup"
+      ],
       "source": "./plugins/comment-trimming"
     },
     {
@@ -33,17 +45,28 @@
         "name": "Himmeltala"
       },
       "category": "conventions",
-      "keywords": ["chinese", "writing", "documentation", "style"],
+      "keywords": [
+        "chinese",
+        "writing",
+        "documentation",
+        "style"
+      ],
       "source": "./plugins/chinese-writing"
     },
     {
       "name": "mock-testing",
-      "description": "拿桩把功能链路跑通的套路：划清各端哪些真跑哪些做桩、从被替换方源码抄契约、纯标准库写桩、把地址指到桩上、分三层验证、收尾还原。配契约清单、接管手段、验证收尾与踩坑四份参考，以及 HTTP 桩、假上游桩、WebSocket 观察器、起停脚本四份可照抄模板。对端未就绪、不可达或缺硬件时用。",
+      "description": "拿模拟服务把功能链路跑通的通用套路：划边界哪些真跑哪些做模拟、从被替换方的源码抄契约、写模拟服务、把地址指到模拟服务上、分三层验证、收尾还原。边界覆盖 HTTP 与 WebSocket、RPC、消息队列、数据库、文件、串口设备与时钟；配 HTTP 模拟服务、假上游服务、WebSocket 观察器、起停脚本四份可照抄模板。对端未就绪、不可达或缺硬件时用。",
       "author": {
         "name": "Himmeltala"
       },
       "category": "testing",
-      "keywords": ["mock", "stub", "testing", "local", "fault-injection"],
+      "keywords": [
+        "mock",
+        "stub",
+        "testing",
+        "local",
+        "fault-injection"
+      ],
       "source": "./plugins/mock-testing"
     }
   ]
