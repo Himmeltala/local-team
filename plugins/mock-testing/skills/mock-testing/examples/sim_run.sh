@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# 起停脚本模板：把桩、被测后端、日志跟踪一次拉起来，并提供 stop / status / check。
+# 起停脚本模板：把模拟服务、被测后端、日志跟踪一次拉起来，并提供 stop / status / check。
 #
 # 用法：
-#   ./sim_run.sh                起桩与被测后端，跟踪日志
-#   ./sim_run.sh --no-app       只起桩，后端自己另外起
+#   ./sim_run.sh                起模拟服务与被测后端，跟踪日志
+#   ./sim_run.sh --no-app       只起模拟服务，后端自己另外起
 #   ./sim_run.sh stop           停掉本次起的进程
 #   ./sim_run.sh status         看端口占用
 #   ./sim_run.sh check          打印关键文件与进程状态
@@ -17,7 +17,7 @@ PID_DIR="$RUN_DIR/pids"
 LOG_DIR="$RUN_DIR/logs"
 mkdir -p "$PID_DIR" "$LOG_DIR"
 
-# 本次要起的桩：名字|端口|启动命令
+# 本次要起的模拟服务：名字|端口|启动命令
 STUBS=(
   "http-stub|18080|python3 $(dirname "$0")/http_stub.py --port 18080"
 )
@@ -94,7 +94,7 @@ stop_all() {
   done
 }
 
-# 端口列表从 STUBS 推导，往数组里加桩之后 status 自动跟上
+# 端口列表从 STUBS 推导，往数组里加一个模拟服务之后 status 自动跟上
 all_ports() {
   local entry port
   echo "$APP_PORT"

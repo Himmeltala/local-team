@@ -7,7 +7,7 @@
 | `commit-guarding` | 版本控制工作流：SVN 与 git 两套提交流程的检查与硬闸门、commit 信息格式、命令速查、冲突与撤销踩坑 | 用 SVN 或 git 管的项目都装，按工作副本类型分流 |
 | `comment-trimming` | 注释规范：稀疏优先、只讲本段代码、禁装饰、编辑文件时整文件顺手清干净、整目录批量清理的子代理 | 所有 Java / Vue 项目 |
 | `chinese-writing` | 中文表达与理解：介词、量词、关联词、语序、术语、篇幅、禁符号代字与翻译腔 | 所有项目 |
-| `mock-testing` | 拿桩把功能链路跑通的套路：划边界、抄契约、写桩、接管地址、三层验证、收尾还原，配四份可照抄模板 | 需要频繁在本地或测试环境复现链路问题的项目 |
+| `mock-testing` | 拿模拟服务把功能链路跑通的套路：划边界、抄契约、写模拟服务、接管地址、三层验证、收尾还原，配四份可照抄模板 | 需要频繁在本地或测试环境复现链路问题的项目 |
 
 ## 安装
 
@@ -49,7 +49,7 @@ claude plugin install comment-trimming@local-team
 /commit-guarding:git-commit          走一遍 git 提交流程
 /comment-trimming:comment-trimming   走一遍注释规范
 /chinese-writing:chinese-writing     走一遍中文表达规范
-/mock-testing:mock-testing           走一遍拿桩跑通链路的流程
+/mock-testing:mock-testing           走一遍拿模拟服务跑通链路的流程
 ```
 
 各插件目录下另有自己的 README，讲该插件的用法。

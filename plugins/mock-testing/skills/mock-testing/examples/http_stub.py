@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""HTTP 桩模板：替掉一个还没就绪、不可达或本机起不来的对端服务。
+"""HTTP 模拟服务模板：替掉一个还没就绪、不可达或本机起不来的对端服务。
 
-只用标准库，起桩不引入任何依赖。
+只用标准库，起模拟服务不引入任何依赖。
 
 用法：
     python3 http_stub.py --port 18080 --weight 12.345
@@ -10,7 +10,7 @@
     python3 http_stub.py --port 18080 --mode hang        # 挂起不返回，测超时分支
 
     curl "http://127.0.0.1:18080/api/weight"
-    curl "http://127.0.0.1:18080/api/weight?value=9.5"     # 改桩里的状态
+    curl "http://127.0.0.1:18080/api/weight?value=9.5"     # 改模拟服务里的状态
 
 改造办法：
     1. 把 dispatch 里的路由换成被测方真正会调到的，其余一律兜底 404。
@@ -23,7 +23,7 @@ import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 
-# 桩里的可变状态，用查询参数或子命令改，便于构造边界值
+# 模拟服务里的可变状态，用查询参数或子命令改，便于构造边界值
 STATE = {"weight": 0.0}
 MODE = "success"
 
@@ -56,9 +56,9 @@ class Handler(BaseHTTPRequestHandler):
             time.sleep(3600)
             return
         if MODE == "fail":
-            return self.reply(200, {"code": 500, "msg": "桩构造的业务失败"})
+            return self.reply(200, {"code": 500, "msg": "模拟服务构造的业务失败"})
         if MODE == "bad":
-            return self.reply(400, {"code": 400, "msg": "参数非法", "detail": "桩构造的参数错误"})
+            return self.reply(400, {"code": 400, "msg": "参数非法", "detail": "模拟服务构造的参数错误"})
 
         # 能改状态的写在读状态之前，顺序反了会永远读到旧值
         if path == "/api/weight" and method == "GET":
@@ -79,8 +79,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(400, {"code": 400, "msg": "缺少 data 字段"})
             return self.reply(200, {"code": 200, "msg": "success", "data": body["data"]})
 
-        # 兜底必须带可读消息，否则"桩没实现"会被误判成"链路断了"
-        return self.reply(404, {"code": 404, "msg": f"桩未实现：{method} {path}"})
+        # 兜底必须带可读消息，否则"模拟服务没实现"会被误判成"链路断了"
+        return self.reply(404, {"code": 404, "msg": f"模拟服务未实现：{method} {path}"})
 
     def reply(self, status, payload):
         data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -101,7 +101,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--host", default="0.0.0.0")
     ap.add_argument("--port", type=int, default=18080)
-    ap.add_argument("--weight", type=float, default=0.0, help="桩启动时的初始值")
+    ap.add_argument("--weight", type=float, default=0.0, help="模拟服务启动时的初始值")
     ap.add_argument("--mode", default="success", choices=["success", "fail", "bad", "hang"],
                     help="故障注入：成功、业务失败、参数非法、挂起不返回")
     args = ap.parse_args()
