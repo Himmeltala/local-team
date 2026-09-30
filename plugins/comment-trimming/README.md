@@ -1,4 +1,4 @@
-# comment-style
+# comment-trimming
 
 团队注释规范插件：注释怎么留、怎么清。与版本控制、中文表达无关的部分都收敛在这里。
 
@@ -6,7 +6,7 @@
 
 | 组件 | 类型 | 作用 |
 |---|---|---|
-| `comment-style` | 技能 | 稀疏注释规则；编辑某个文件时顺手把该文件整文件清干净 |
+| `comment-trimming` | 技能 | 稀疏注释规则、只讲本段代码、限长两行；编辑某个文件时顺手把该文件整文件清干净 |
 | `comment-trimmer` | 子代理 | 整目录、整模块的存量注释批量清理，先出清单再动手 |
 | SessionStart 提醒 | 钩子 | 会话开始时注入注释约定 |
 
@@ -16,37 +16,23 @@
 
 ```bash
 claude plugin marketplace add Himmeltala/local-team
-claude plugin install comment-style@local-team
+claude plugin install comment-trimming@local-team
 ```
 
-改完插件内容后需要重启会话生效（钩子在会话启动时加载）。
+只想在部分项目里启用时，在该项目目录下加 `-s project` 装到项目级：
+
+```bash
+claude plugin install comment-trimming@local-team -s project
+```
+
+插件内容是复制到缓存目录的，改源目录不会自动生效。更新内容走 `claude plugin marketplace update local-team` 加 `claude plugin update comment-trimming@local-team`，之后重启会话（钩子在会话启动时加载）。
 
 ## 使用
 
 技能多数会自动触发，也可以显式调用：
 
-- 说"注释太乱帮我清一下" —— 触发 `comment-style` 技能的裁剪规则
+- 说"注释太乱帮我清一下" —— 触发 `comment-trimming` 技能的裁剪规则
 - 说"把 xxx 模块的乱注释批量清掉" —— 派 `comment-trimmer` 子代理，先出清单再动手
-- `/comment-style:comment-style` —— 显式走一遍规则
+- `/comment-trimming:comment-trimming` —— 显式走一遍规则
 
-## 核心约定速览
-
-**稀疏优先**：默认可不写。代码能自解释的就不加，只有"为什么"非显然时才写。
-
-**注释要短**：一律一行，最多两行，所有类型一个标准——行内、字段与方法注解、类头 `功能：`/`说明：`、Mapper XML 的 `--`、模板注释。一行写不完的信息挪进命名、常量或文档，不要写成一段。承载业务口径的长注释也照压，压不下去又丢不得的报告给用户定。Vue / JS 文件头块与功能性指令不受此限。
-
-**禁符号装饰**：禁 emoji，禁 `====` / `****` 分割线，禁 ★✅🚀 这类无义装饰。符号不承义，句子才承义——映射、换算、流转一律写成文字（`regionId 映射到 orgCode`、`(KB) 换算成 GB`、`在线转离线`）。横幅注释只剥装饰、留住句子。
-
-**不复述代码**：写在 `setName()` 上方的"设置名称"是噪音，删。
-
-**顺手裁剪**：本次编辑碰到的文件，把该文件里的乱注释整文件清干净；没编辑过的文件不碰。清理动到本次改动之外的注释时，提交信息那一行带上"顺带清理注释"。
-
-**永远不删**：功能性指令（`eslint-disable`、`@SuppressWarnings`、`//noinspection`）、`TODO` / `FIXME`（只去装饰）、类级元信息与 Vue 文件头六字段块。
-
-**按层的写法**：Java 字段用 `@ApiModelProperty`、控制层方法用 `@ApiOperation`，不要改成 Javadoc；Service 方法与私有方法不加注解。前端文件头注释块由 eslint 强制，必须保留。
-
-## 维护
-
-插件源在 `~/projs/自用项目/local-team/plugins/comment-style/`，与市场里另外两个插件同处一个 git 仓库，整体的安装与更新流程见仓库根目录的 README。
-
-规则从哪来、实测数字、裁剪范围的沿革见 `docs/maintainer-notes.md`。
+触发词还包括"注释太多"、"注释太长"、"注释写了一大串"、"清理注释"、"裁剪注释"、"压缩注释"、"去掉 emoji"、"注释规范"。注释的篇幅数值以 `chinese-writing` 插件的篇幅标准为准，本插件只执行。
