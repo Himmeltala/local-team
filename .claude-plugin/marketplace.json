@@ -54,20 +54,23 @@
       "source": "./plugins/chinese-writing"
     },
     {
-      "name": "mock-testing",
-      "description": "拿模拟服务把功能链路跑通的通用套路：划边界哪些真跑哪些做模拟、从被替换方的源码抄契约、写模拟服务、把地址指到模拟服务上、分三层验证、收尾还原。边界覆盖 HTTP 与 WebSocket、RPC、消息队列、数据库、文件、串口设备与时钟；配 HTTP 模拟服务、假上游服务、WebSocket 观察器、起停脚本四份可照抄模板。对端未就绪、不可达或缺硬件时用。",
+      "name": "code-testing",
+      "description": "把代码测通的三个技能：mock-testing 在进程外起模拟服务把链路跑通（划边界、抄契约、写模拟服务、三层验证、收尾还原，边界覆盖 HTTP 与 WebSocket、RPC、消息队列、数据库、文件、串口设备与时钟）；coverage-testing 在测试代码里写假对端做端到端测试，按未覆盖行补测把覆盖率拉到 90% 并连跑验稳；java-testing 记 Java 里写这类测试的 JUnit 5、surefire 与 JaCoCo 具体写法与坑。",
       "author": {
         "name": "Himmeltala"
       },
       "category": "testing",
       "keywords": [
+        "testing",
         "mock",
         "stub",
-        "testing",
-        "local",
+        "coverage",
+        "jacoco",
+        "junit",
+        "java",
         "fault-injection"
       ],
-      "source": "./plugins/mock-testing"
+      "source": "./plugins/code-testing"
     },
     {
       "name": "bug-tracing",

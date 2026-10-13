@@ -7,7 +7,7 @@
 | `commit-guarding` | 版本控制工作流：SVN 与 git 两套提交流程的检查与硬闸门、commit 信息格式、命令速查、冲突与撤销踩坑 | 用 SVN 或 git 管的项目都装，按工作副本类型分流 |
 | `comment-trimming` | 注释规范：稀疏优先、只讲本段代码、禁装饰、编辑文件时整文件顺手清干净、整目录批量清理的子代理 | 所有 Java / Vue 项目 |
 | `chinese-writing` | 中文表达与理解：介词、量词、关联词、语序、术语、篇幅、禁符号代字与翻译腔 | 所有项目 |
-| `mock-testing` | 拿模拟服务把功能链路跑通的套路：划边界、抄契约、写模拟服务、接管地址、三层验证、收尾还原，配四份可照抄模板 | 需要频繁在本地或测试环境复现链路问题的项目 |
+| `code-testing` | 把代码测通的三段套路：进程外起模拟服务跑通链路、进程内假对端写端到端测试并按覆盖率补测、Java 里写这类测试的构建与 JVM 坑 | 需要频繁复现链路问题、或要把链路用测试锁住的项目 |
 | `bug-tracing` | 问题排查：先沿调用链读代码，逻辑排除干净再查数据源，需要时经授权连库取部分数据作证 | 所有项目 |
 | `code-shaping` | 编码思维：复用优先、一个函数一件事、过长就拆、胶水代码泛化、模式用得其所、不许过度抽象 | 所有项目 |
 
@@ -20,7 +20,7 @@ claude plugin marketplace add Himmeltala/local-team
 claude plugin install commit-guarding@local-team
 claude plugin install comment-trimming@local-team
 claude plugin install chinese-writing@local-team
-claude plugin install mock-testing@local-team
+claude plugin install code-testing@local-team
 claude plugin install bug-tracing@local-team
 claude plugin install code-shaping@local-team
 ```
@@ -38,11 +38,15 @@ claude plugin install commit-guarding@local-team -s project
 ```bash
 claude plugin uninstall control-workflow@local-team
 claude plugin uninstall comment-style@local-team
+claude plugin uninstall mock-testing@local-team
 claude plugin install commit-guarding@local-team
 claude plugin install comment-trimming@local-team
+claude plugin install code-testing@local-team
 ```
 
 更早的两个旧名（`svn-team-conventions`、`svn-workflow`）同样先卸后装。
+
+`mock-testing` 改成 `code-testing` 之后技能拆成三个，原来的 `mock-testing:mock-testing` 变成 `code-testing:mock-testing`。
 
 ## 使用
 
@@ -53,7 +57,9 @@ claude plugin install comment-trimming@local-team
 /commit-guarding:git-commit          走一遍 git 提交流程
 /comment-trimming:comment-trimming   走一遍注释规范
 /chinese-writing:chinese-writing     走一遍中文表达规范
-/mock-testing:mock-testing           走一遍拿模拟服务跑通链路的流程
+/code-testing:mock-testing           走一遍拿模拟服务跑通链路的流程
+/code-testing:coverage-testing       走一遍端到端测试与覆盖率补测流程
+/code-testing:java-testing           Java 里写测试、量覆盖率、排构建工具的坑
 /bug-tracing:bug-tracing             走一遍问题排查流程
 /code-shaping:code-shaping           走一遍编码思维判断清单
 ```
