@@ -40,9 +40,9 @@ allowed-tools: [Bash, Read, Grep, Glob]
 <type>: <中文描述>
 ```
 
-只有一行：没有第二行，没有正文段，没有空行，没有列表。前缀用 feat / fix / refactor / perf / docs / style / test / chore / build / ci / revert，**前缀后面不加范围括号**（写 `feat: 新增作业点导入接口`，不写 `feat(import): ...`，要指明模块就写进中文描述），冒号用半角 `: `，整行尽量 50 字以内。
+只有一行，前缀后面不加范围括号，冒号用半角，描述用中文，整行 50 字以内。一行说不清说明这次提交装的事太多，**拆成多次提交，每次一行**。
 
-一行说不清，说明这次提交装的事太多，**拆成多次提交，每次一行**；不要写成"一行标题，加一个空行，再加两条 `-` 列表"那种样式。前缀含义、更多正反例见 `../svn-commit/references/commit-message-format.md`——git 与 SVN 共用同一套格式，只有提交命令不同。
+格式细则、前缀含义与更多正反例见 `../svn-commit/references/commit-message-format.md`——git 与 SVN 共用同一套格式，只有提交命令不同。
 
 ## 闸门拦哪四类
 
