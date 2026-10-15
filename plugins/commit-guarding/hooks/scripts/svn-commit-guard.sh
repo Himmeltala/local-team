@@ -15,6 +15,8 @@
 #
 # 第三条只看命令行本身，不碰工作副本，所以在非工作副本目录里也照样拦。
 #
+# 输入解析、提交信息取值与提示输出在 guard-common.sh 里，与 git 闸门共用。
+#
 # 任何异常一律放行：不是 Bash 调用、JSON 解析失败、目标不是工作副本、svn 报错、
 # 服务器不可达。闸门只拦确定坏的情况，自身出故障时绝不能堵住提交。
 #
@@ -22,27 +24,8 @@
 
 set -uo pipefail
 
-# 输出 tool_name、cwd、command，用 NUL 分隔。bash 变量存不了 NUL，所以走 mapfile。
-parse_input() {
-  local raw="$1"
-  if command -v python3 >/dev/null 2>&1; then
-    python3 -c '
-import json, sys
-try:
-    d = json.load(sys.stdin)
-except Exception:
-    sys.exit(1)
-ti = d.get("tool_input") or {}
-sys.stdout.write("%s\0%s\0%s" % (
-    d.get("tool_name") or "", d.get("cwd") or "", ti.get("command") or ""))
-' <<<"$raw" 2>/dev/null
-  elif command -v jq >/dev/null 2>&1; then
-    jq -j '[.tool_name // "", .cwd // "", .tool_input.command // ""] | join("\u0000")' \
-      <<<"$raw" 2>/dev/null
-  else
-    return 1
-  fi
-}
+# shellcheck source=guard-common.sh
+source "$(dirname "${BASH_SOURCE[0]}")/guard-common.sh"
 
 # 找出命令行里真正执行 svn 提交的那一段，找到就打印出来。
 # 先按 ; && || | 切段，再看每段是否以 svn 开头且带 commit / ci 参数——
@@ -89,27 +72,6 @@ resolve_target() {
 # 团队格式是 `<type>: <中文描述>`，`feat(api): xxx` 这种带括号范围的写法不用。
 # 判定只看信息开头，描述内部的括号不受影响，所以下面全部锚行首。
 
-# 匹配 -m / --message 的值：带引号的整段，或单个非空白词（-mMSG 粘写）。
-# 未加引号的多词信息在 shell 里本来就断成多个参数，还原不出原貌，不处理。
-MESSAGE_RE='(--message=|-m|--message)[[:space:]]*("[^"]*"|'"'"'[^'"'"']*'"'"'|[^[:space:]]*)'
-
-# 剥掉选项名与成对的引号，只留信息正文。
-strip_message_flag() {
-  local hit="$1" v
-  case "$hit" in
-    --message=*) v="${hit#--message=}" ;;
-    --message*) v="${hit#--message}" ;;
-    -m*) v="${hit#-m}" ;;
-    *) v="$hit" ;;
-  esac
-  v="${v#"${v%%[![:space:]]*}"}"
-  case "$v" in
-    \"*\") v="${v#\"}"; v="${v%\"}" ;;
-    \'*\') v="${v#\'}"; v="${v%\'}" ;;
-  esac
-  printf '%s\n' "$v"
-}
-
 # -F / --file 指向的文件，取首行当提交信息。
 file_message() {
   local hit="$1" path
@@ -136,37 +98,12 @@ commit_messages() {
   done < <(printf '%s\n' "$seg" | grep -oE '(--file=|-F|--file)[[:space:]]*[^[:space:]]+' || true)
 }
 
-# 行首是 `<type>(` 就算带范围括号。前后空白与大小写都不影响判定。
-has_scope_prefix() {
-  local probe="${1,,}"
-  [[ "$probe" =~ ^(feat|fix|refactor|perf|docs|style|test|chore|build|ci|revert)[[:space:]]*\( ]]
-}
-
-report_message_block() {
-  local msg="$1"
-  {
-    echo "提交被拦下：提交信息前缀带了范围括号"
-    echo
-    echo "收到的提交信息：$msg"
-    echo
-    echo "本团队格式是 <type>: <中文描述>，前缀后面直接跟半角冒号加空格，不加 (...) 范围。"
-    echo "要指明模块或接口，把名字写进中文描述里："
-    echo
-    echo "  写成   fix: 门禁记录统计接口补齐无数据的区域与操作类型"
-    echo "  不写   fix(doorRecord): 统计接口补齐无数据的区域与操作类型"
-    echo
-    echo "描述内部的括号不受限制，只有前缀后面那一对不行。"
-    echo "改好信息后重新执行刚才的 svn commit。"
-  } >&2
-  exit 2
-}
-
 check_commit_message() {
   local seg="$1" msg
   while IFS= read -r msg; do
     [ -n "$msg" ] || continue
     has_scope_prefix "$msg" || continue
-    report_message_block "$msg"
+    report_message_block scope "$msg"
   done < <(commit_messages "$seg")
 }
 
@@ -208,31 +145,21 @@ report_and_block() {
 }
 
 main() {
-  local raw
-  raw=$(cat)
-  [ -n "$raw" ] || exit 0
+  local cmd cwd seg target xml offline=""
+  hook_input || exit 0
+  cwd="${HOOK_FIELDS[1]}"
+  cmd="${HOOK_FIELDS[2]}"
 
-  local -a fields=()
-  mapfile -d '' -t fields < <(parse_input "$raw")
-  [ "${#fields[@]}" -eq 3 ] || exit 0
-
-  local tool="${fields[0]}" cwd="${fields[1]}" cmd="${fields[2]}"
-  [ "$tool" = "Bash" ] || exit 0
-  [ -n "$cmd" ] || exit 0
-
-  local seg
   seg=$(find_commit_segment "$cmd") || exit 0
 
   # 信息格式只看命令行，与工作副本状态无关，先判：提交被拦时提示更直接。
   check_commit_message "$seg"
 
-  local target
   target=$(resolve_target "$seg" "$cwd")
   [ -n "$target" ] || exit 0
   svn info --non-interactive "$target" >/dev/null 2>&1 || exit 0
 
   # 先带 -u 查落后；服务器不可达时退化成只查本地冲突，冲突判定不依赖网络。
-  local xml offline=""
   xml=$(svn status --xml --non-interactive -u -- "$target" 2>/dev/null) || xml=""
   if [ -z "$xml" ]; then
     xml=$(svn status --xml --non-interactive -- "$target" 2>/dev/null) || exit 0

@@ -56,6 +56,18 @@ block() {
   fi
 }
 
+# 拦下且提示里不含某关键词：用于确认提示文本没被 git 闸门的措辞串味
+block_without() {
+  call_hook "$1" "$2"
+  if [ "$got" != 2 ]; then
+    fail=$((fail + 1)); printf 'FAIL %-40s 应当拦下，实际 exit=%s\n     stderr: %s\n' "$1" "$got" "$ERR"
+  elif [[ "$ERR" == *"$3"* ]]; then
+    fail=$((fail + 1)); printf 'FAIL %-40s 提示里不该出现「%s」\n     stderr: %s\n' "$1" "$3" "$ERR"
+  else
+    pass=$((pass + 1)); printf 'ok   %-40s 拦下，提示不含「%s」\n' "$1" "$3"
+  fi
+}
+
 # ---------- 建库 ----------
 # 建库阶段任何一步失败都立即中止：fixture 坏了还继续跑，测试会全绿但毫无意义。
 must() {
@@ -144,6 +156,7 @@ printf 'feat(api): 从文件里读来的提交信息\n' > "$ROOT/msg-bad.txt"
 block "-F 文件首行带范围括号"       "$(payload Bash "$WA" "svn commit -F $ROOT/msg-bad.txt")" "范围括号"
 printf 'feat(api): 带范围\n第二行正文\n' > "$ROOT/msg-bad2.txt"
 block "-F 只判首行仍拦下"          "$(payload Bash "$WA" "svn commit -F $ROOT/msg-bad2.txt")" "范围括号"
+block_without "提示里不出现 git 字样" "$(payload Bash "$WA" "svn commit -F $ROOT/msg-bad2.txt")" "git"
 
 echo
 echo "== 提交信息前缀合规：放行 =="

@@ -10,8 +10,8 @@
 # pull、切分支仍由模型按提示手工完成，每一步都留在会话里可查。
 #
 # 与 svn 闸门分成两份文件，判据互不干扰：svn 的落后与冲突读 `svn status --xml -u`，
-# git 的落后读 `git ls-remote`，没有可复用的判定。钩子输入解析那段两边是重复的，
-# 有意不抽公共库：抽了要动已经在跑、且有验收测试覆盖的 svn 闸门。
+# git 的落后读 `git ls-remote`，没有可复用的判定。输入解析与提交信息判断那段两边相同，
+# 抽在 `guard-common.sh` 里，由两份闸门引入。
 #
 # 落后判定用 `git ls-remote` 而不是 `git fetch`：ls-remote 只读远端引用，不改本地
 # 任何状态，钩子不动工作副本这条底线不破。远端不可达（离线、无凭据）时跳过这一条。
@@ -28,27 +28,8 @@
 
 set -uo pipefail
 
-# 输出 tool_name、cwd、command，用 NUL 分隔。bash 变量存不了 NUL，所以走 mapfile。
-parse_input() {
-  local raw="$1"
-  if command -v python3 >/dev/null 2>&1; then
-    python3 -c '
-import json, sys
-try:
-    d = json.load(sys.stdin)
-except Exception:
-    sys.exit(1)
-ti = d.get("tool_input") or {}
-sys.stdout.write("%s\0%s\0%s" % (
-    d.get("tool_name") or "", d.get("cwd") or "", ti.get("command") or ""))
-' <<<"$raw" 2>/dev/null
-  elif command -v jq >/dev/null 2>&1; then
-    jq -j '[.tool_name // "", .cwd // "", .tool_input.command // ""] | join("\u0000")' \
-      <<<"$raw" 2>/dev/null
-  else
-    return 1
-  fi
-}
+# shellcheck source=guard-common.sh
+source "$(dirname "${BASH_SOURCE[0]}")/guard-common.sh"
 
 # 这一段是不是 git commit 调用。跳过全局选项与它们的取值（-C 目录、-c 配置、
 # --git-dir 等），再看剩下的第一个非选项词是不是 commit。
@@ -125,29 +106,8 @@ find_commit_segment() {
 }
 
 # ---------- 提交信息 ----------
-# 团队格式是 `<type>: <中文描述>`，只有一行。下面三条判定都只看命令行文本，
+# 团队格式是 `<type>: <中文描述>`，只有一行。下面几条判定都只看命令行文本，
 # 不碰工作副本，所以在非仓库目录里也照样拦。
-
-# 匹配 -m / --message 的值：带引号的整段，或单个非空白词（-mMSG 粘写）。
-# 短选项组里的 m 也能命中，所以 `-am "x"` 一样取得到信息。
-MESSAGE_RE='(--message=|-m|--message)[[:space:]]*("[^"]*"|'"'"'[^'"'"']*'"'"'|[^[:space:]]*)'
-
-# 剥掉选项名与成对的引号，只留信息正文。
-strip_message_flag() {
-  local hit="$1" v
-  case "$hit" in
-    --message=*) v="${hit#--message=}" ;;
-    --message*) v="${hit#--message}" ;;
-    -m*) v="${hit#-m}" ;;
-    *) v="$hit" ;;
-  esac
-  v="${v#"${v%%[![:space:]]*}"}"
-  case "$v" in
-    \"*\") v="${v#\"}"; v="${v%\"}" ;;
-    \'*\') v="${v#\'}"; v="${v%\'}" ;;
-  esac
-  printf '%s\n' "$v"
-}
 
 # 收齐这一段里每处 -m / --message 的值，一条一行。
 message_values() {
@@ -266,53 +226,6 @@ file_first_line() {
     esac
     prev="$tok"
   done
-}
-
-# 行首是 `<type>(` 就算带范围括号。前后空白与大小写都不影响判定。
-has_scope_prefix() {
-  local probe="${1,,}"
-  [[ "$probe" =~ ^(feat|fix|refactor|perf|docs|style|test|chore|build|ci|revert)[[:space:]]*\( ]]
-}
-
-report_message_block() {
-  local kind="$1" msg="$2"
-  {
-    case "$kind" in
-      scope)
-        echo "提交被拦下：提交信息前缀带了范围括号"
-        echo
-        echo "收到的提交信息：$msg"
-        ;;
-      multiline)
-        echo "提交被拦下：提交信息不是单行"
-        echo
-        echo "问题：$msg"
-        ;;
-      missing)
-        echo "提交被拦下：没有给提交信息"
-        ;;
-    esac
-    echo
-    echo "本团队格式是 <type>: <中文描述>，只有一行，前缀后面直接跟半角冒号加空格。"
-    echo "要指明模块或接口，把名字写进中文描述里："
-    echo
-    echo "  写成   git commit -m \"fix: 门禁记录统计接口补齐无数据的区域与操作类型\""
-    echo "  不写   git commit -m \"fix(doorRecord): 统计接口补齐无数据的区域与操作类型\""
-    echo
-    case "$kind" in
-      multiline)
-        echo "多个 -m、引号跨行、-F 文件多行，git 会把它们拼成第二段正文，本团队不写正文。"
-        echo "一行说不清说明这次提交装的事太多，拆成多次提交。"
-        ;;
-      missing)
-        echo "非交互环境里不带 -m 的 git commit 会打开编辑器，命令一直卡住。"
-        echo "要沿用上一条信息就写 git commit --amend --no-edit。"
-        ;;
-    esac
-    echo
-    echo "改好命令后重新执行刚才的提交。"
-  } >&2
-  exit 2
 }
 
 check_commit_message() {
@@ -465,25 +378,16 @@ check_repo_state() {
 }
 
 main() {
-  local raw
-  raw=$(cat)
-  [ -n "$raw" ] || exit 0
+  local cmd cwd seg repo
+  hook_input || exit 0
+  cwd="${HOOK_FIELDS[1]}"
+  cmd="${HOOK_FIELDS[2]}"
 
-  local -a fields=()
-  mapfile -d '' -t fields < <(parse_input "$raw")
-  [ "${#fields[@]}" -eq 3 ] || exit 0
-
-  local tool="${fields[0]}" cwd="${fields[1]}" cmd="${fields[2]}"
-  [ "$tool" = "Bash" ] || exit 0
-  [ -n "$cmd" ] || exit 0
-
-  local seg
   seg=$(find_commit_segment "$cmd") || exit 0
 
   # 信息格式只看命令行，与仓库状态无关，先判：提交被拦时提示更直接
   check_commit_message "$seg"
 
-  local repo
   repo=$(resolve_repo_dir "$seg" "$cwd")
   [ -n "$repo" ] || exit 0
   [ -d "$repo" ] || exit 0
