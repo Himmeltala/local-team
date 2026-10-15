@@ -20,12 +20,15 @@ allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 3. **跑一遍。** `mvn -B test`。看的是用例数与耗时，不是退出码：失败会打印，**一条都没跑起来却显示 BUILD SUCCESS 才是真麻烦**。
 4. **量覆盖率。** 先拿基线再补测。JaCoCo 可以不改 pom、用命令行直接调，见 `references/surefire-and-jacoco.md`。
 
-## 四条硬规矩
+## 与 coverage-testing 的分界
 
-1. **等待一律轮询，不 sleep。** 骨架见 `examples/ForwardTestSupport.java`。
-2. **测试自己起的东西自己关。** 见 `references/async-and-sockets.md` 的「线程收尾」。
-3. **临时资源用系统给的。** 临时目录与端口都别写死，见 `references/async-and-sockets.md`。
-4. **不要为验证语法反复构建。** 一次 `mvn test` 几十秒，改一行跑一次纯属浪费。攒够改动再跑，或者只跑相关用例。
+本技能只管 Java 与构建工具的具体写法：认环境、写用例、跑 `mvn test`、量覆盖率、排 surefire 与 JaCoCo 的坑。测试怎么设计、覆盖率怎么补，一律归 `coverage-testing` 技能，本技能不复述。
+
+## 三条硬规矩
+
+1. **测试自己起的东西自己关。** 见 `references/async-and-sockets.md` 的「线程收尾」。
+2. **临时资源用系统给的。** 临时目录与端口都别写死，见 `references/async-and-sockets.md`。
+3. **不要为验证语法反复构建。** 一次 `mvn test` 几十秒，改一行跑一次纯属浪费。攒够改动再跑，或者只跑相关用例。
 
 ## 常见坑
 
