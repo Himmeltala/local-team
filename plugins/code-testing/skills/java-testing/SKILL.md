@@ -35,7 +35,7 @@ allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 | 覆盖率报告为空 | 构建配了 `forkCount=0`，agent 没挂上；或 agent 与 JVM 版本不匹配 |
 | `mvn test` 不退出 | 测试里起的线程池是非 daemon 且没关 |
 | 控制台看不到测试日志 | surefire 开了 `redirectTestOutputToFile`，日志在 `target/surefire-reports/*-output.txt` |
-| 用例偶发红 | 见 `skills/coverage-testing/references/stability.md` |
+| 用例偶发红 | 见 `coverage-testing` 技能的 `references/stability.md` |
 | 大报文用例特别慢 | 某处把 socket 接收缓冲压小了，见 `references/async-and-sockets.md` |
 
 ## 资源索引

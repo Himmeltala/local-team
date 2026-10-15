@@ -63,7 +63,7 @@ reader.start();
 socket.setReceiveBufferSize(1024);
 ```
 
-副作用很大：小窗口配 TCP 的延迟确认，吞吐会掉几个数量级，几十 MB 的数据传不完，正常路径的用例会被拖到超时。只在需要造"对端不读"的模式里压，正常模式用系统默认缓冲；什么时候压、怎么避免压出半截状态，见 `skills/coverage-testing/references/fake-peer.md`。
+副作用很大：小窗口配 TCP 的延迟确认，吞吐会掉几个数量级，几十 MB 的数据传不完，正常路径的用例会被拖到超时。只在需要造"对端不读"的模式里压，正常模式用系统默认缓冲；什么时候压、怎么避免压出半截状态，见 `coverage-testing` 技能的 `references/fake-peer.md`。
 
 一处细节：窗口缩放是在握手时按监听 socket 的缓冲谈定的，在 `accept()` 返回的连接上再改缓冲，效果不如在 `bind` 之前把 `ServerSocket` 的接收缓冲设小来得稳。两种都试过，Linux 上都能压缩窗口，但要让行为可预期，优先设监听端的。
 
@@ -76,4 +76,4 @@ await("对端应收到完整报文", () -> peer.receivedBytes().length == payloa
 assertArrayEquals(payload, peer.receivedBytes());
 ```
 
-被测代码里的"已发送成功"标记（日志、状态字段、归档目录）不能拿来当证据。规则与失败形态见 `skills/coverage-testing/references/stability.md` 的根因一。
+被测代码里的"已发送成功"标记（日志、状态字段、归档目录）不能拿来当证据。规则与失败形态见 `coverage-testing` 技能的 `references/stability.md` 的根因一。

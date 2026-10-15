@@ -2,7 +2,7 @@
 
 抽成一个 `XxxTestSupport` 类放进测试包，所有用例共用。抽之前先看项目里有没有，有了就用现成的，别各写一遍。
 
-Java 的可照抄骨架在 `skills/java-testing/examples/ForwardTestSupport.java`；下面只写三件套各自要满足什么，换语言照这些要求实现即可。
+Java 的可照抄骨架在 `java-testing` 技能的 `examples/ForwardTestSupport.java`；下面只写三件套各自要满足什么，换语言照这些要求实现即可。
 
 ## 一、轮询等待
 

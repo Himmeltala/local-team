@@ -31,7 +31,7 @@
 - **别把压小接收缓冲的逻辑写进所有连接**。压小之后大报文的吞吐会掉几个数量级（小窗口配延迟确认），正常路径的用例会被拖到超时。只在"只连不读"这一种模式下压。
 - 模式判断与"是否起读线程"要用**同一个局部变量快照**，别在两个分支里各读一次标志位，否则会出现"压了小窗口却还在读"的半截状态。
 
-具体到 Java 的写法与副作用，见 `skills/java-testing/references/async-and-sockets.md`。
+具体到 Java 的写法与副作用，见 `java-testing` 技能的 `references/async-and-sockets.md`。
 
 ## 与 mock-testing 的共存
 
