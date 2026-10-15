@@ -12,20 +12,17 @@
 
 ## 安装
 
-市场源是 GitHub 上的 `Himmeltala/local-team` 仓库，对应工作副本 `~/projs/自用项目/local-team`：
-
 ```bash
-claude plugin marketplace add Himmeltala/local-team
 claude plugin install comment-trimming@local-team
 ```
 
-只想在部分项目里启用时，在该项目目录下加 `-s project` 装到项目级：
+只想在部分项目里启用、其它项目不启用时，加 `-s project` 装到项目级（在项目目录下执行）：
 
 ```bash
 claude plugin install comment-trimming@local-team -s project
 ```
 
-插件内容是复制到缓存目录的，改源目录不会自动生效。更新内容走 `claude plugin marketplace update local-team` 加 `claude plugin update comment-trimming@local-team`，之后重启会话（钩子在会话启动时加载）。
+市场源地址、缓存机制与更新方式见仓库根目录的 `README.md`。
 
 ## 使用
 

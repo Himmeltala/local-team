@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "local-team",
-  "description": "本地团队插件市场。存放本单位自用约定（版本控制工作流、注释规范、中文表达规范）与拿模拟服务跑通链路的套路，仓库托管在 GitHub 上。",
+  "description": "本地团队插件市场。存放本单位自用约定（版本控制工作流、注释规范、中文表达规范、编码思维）与把代码测通、问题排查的套路，仓库托管在 GitHub 上。",
   "owner": {
     "name": "Himmeltala"
   },
   "plugins": [
     {
       "name": "commit-guarding",
-      "description": "版本控制工作流：SVN 与 git 两套提交流程的检查与硬闸门（提交前先拉最新、冲突清零、单行 commit 信息格式、前缀不带范围括号）、命令速查、冲突与撤销踩坑处理。按工作副本下有没有 .svn 或 .git 分流。",
+      "description": "版本控制工作流：SVN 与 git 两套提交流程的检查与硬闸门、命令速查、冲突与撤销踩坑处理。按工作副本下有没有 .svn 或 .git 分流。提交信息格式细则见插件内的 `commit-message-format.md`。",
       "author": {
         "name": "Himmeltala"
       },

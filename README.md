@@ -50,18 +50,6 @@ claude plugin install code-testing@local-team
 
 ## 使用
 
-技能多数会自动触发，也可以显式调用：
+技能多数会自动触发，不必记命令。各插件的显式调用路径、触发词与适用范围，写在各插件目录下的 README 里。
 
-```
-/commit-guarding:svn-commit          走一遍 SVN 提交流程
-/commit-guarding:git-commit          走一遍 git 提交流程
-/comment-trimming:comment-trimming   走一遍注释规范
-/chinese-writing:chinese-writing     走一遍中文表达规范
-/code-testing:mock-testing           走一遍拿模拟服务跑通链路的流程
-/code-testing:coverage-testing       走一遍端到端测试与覆盖率补测流程
-/code-testing:java-testing           Java 里写测试、量覆盖率、排构建工具的坑
-/bug-tracing:bug-tracing             走一遍问题排查流程
-/code-shaping:code-shaping           走一遍编码思维判断清单
-```
-
-各插件目录下另有自己的 README，讲该插件的用法。
+篇幅与符号这类全局规则的值只有一份，在 `chinese-writing` 插件的篇幅标准里，其余插件只指认不另写。

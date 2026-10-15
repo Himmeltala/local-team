@@ -16,10 +16,7 @@ SVN 与 git 两种工作副本都管，按目录下有没有 `.svn` 或 `.git` �
 
 ## 安装
 
-市场源是 GitHub 上的 `Himmeltala/local-team` 仓库，对应工作副本 `~/projs/自用项目/local-team`：
-
 ```bash
-claude plugin marketplace add Himmeltala/local-team
 claude plugin install commit-guarding@local-team
 ```
 
@@ -29,7 +26,7 @@ claude plugin install commit-guarding@local-team
 claude plugin install commit-guarding@local-team -s project
 ```
 
-插件内容是复制到缓存目录的，改源目录不会自动生效。更新内容走 `claude plugin marketplace update local-team` 加 `claude plugin update commit-guarding@local-team`，之后重启会话（钩子在会话启动时加载）。
+市场源地址、缓存机制与更新方式见仓库根目录的 `README.md`。
 
 ## 使用
 

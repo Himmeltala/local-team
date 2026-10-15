@@ -14,18 +14,17 @@
 
 ## 安装
 
-市场源是 GitHub 上的 `Himmeltala/local-team` 仓库，对应工作副本 `~/projs/自用项目/local-team`：
-
 ```bash
-claude plugin marketplace add Himmeltala/local-team
 claude plugin install bug-tracing@local-team
 ```
 
-只想在部分项目里启用时，在该项目目录下加 `-s project` 装到项目级：
+只想在部分项目里启用、其它项目不启用时，加 `-s project` 装到项目级（在项目目录下执行）：
 
 ```bash
 claude plugin install bug-tracing@local-team -s project
 ```
+
+市场源地址、缓存机制与更新方式见仓库根目录的 `README.md`。
 
 ## 使用
 
