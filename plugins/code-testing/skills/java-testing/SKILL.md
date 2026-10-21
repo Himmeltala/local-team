@@ -1,6 +1,6 @@
 ---
 name: java-testing
-description: 当在 Java 项目里写测试、跑测试或调覆盖率工具时使用：搭 JUnit 5 用例、调 surefire、跑 mvn test、覆盖率报告没数据或全为空、测试卡住不退出、覆盖率统计把整个工程算进分母、测试里起 socket 或线程、测试里用反射。触发词包括"写个 JUnit 测试"、"mvn test 跑不起来"、"surefire 配置"、"JaCoCo 报告没数据"、"覆盖率报告是空的"、"forkCount"、"测试卡住不退出"、"测试里用反射"。管的是 Java 与构建工具的具体写法；测试怎么设计、覆盖率怎么补在 coverage-testing 里。
+description: 当在 Java 项目里写测试、跑测试，或调 surefire 与 JaCoCo 时使用。触发词包括"写个 JUnit 测试"、"mvn test 跑不起来"、"surefire 配置"、"JaCoCo 报告没数据"、"覆盖率报告是空的"、"覆盖率统计把整个工程算进分母"、"forkCount"、"测试卡住不退出"、"测试里用反射"。测试设计在 coverage-testing，本技能只管 Java 与构建工具的具体写法。
 argument-hint: "[要写的测试类、要调的构建配置或覆盖率工具问题]"
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 ---

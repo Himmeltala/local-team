@@ -1,6 +1,6 @@
 ---
 name: git-commit
-description: 当用户要求把改动提交到 git 仓库、推送、写提交说明、查看改动、拉取远端、解决冲突、回滚撤销时使用；触发词包括"提交"、"提交代码"、"git commit"、"commit 一下"、"推送"、"push"、"改了什么"、"git status"、"git diff"、"git log"、"拉最新代码"、"git pull"、"冲突了"、"回滚"、"撤销修改"、"看历史"。也用于工作副本是 git 而不是 SVN、需要按 git 流程走的场合。
+description: 当用户要求提交到 git 仓库、推送、写提交说明、查看改动、拉取远端、解决冲突、回滚撤销时使用。触发词包括"提交"、"提交代码"、"git commit"、"commit 一下"、"推送"、"push"、"改了什么"、"git status"、"git diff"、"git log"、"拉最新代码"、"git pull"、"冲突了"、"回滚"、"撤销修改"、"看历史"。也用于工作副本是 git 的场合。
 argument-hint: "[要提交的路径] [本次改动的一句话说明]"
 allowed-tools: [Bash, Read, Grep, Glob]
 ---
@@ -25,7 +25,7 @@ allowed-tools: [Bash, Read, Grep, Glob]
 **闸门：提交前先拉最新。** 本地落后于远端、或与远端分叉时，`git commit` 会被本插件的 PreToolUse 钩子拦下（退出码 2）。这是插件级钩子，不是仓库里的 `.git/hooks`，`ls .git/hooks` 里看不到，别拿它判断闸门在不在；没装本插件的环境没有这道兜底。钩子只拦不改，`fetch` 与 `pull --rebase` 仍由你手工做完。
 
 1. **确认位置**——`git rev-parse --is-inside-work-tree`，`git status -sb` 看当前分支与上下游差多少。
-2. **先对远端**——`git fetch`，再看 `git status -sb`。落后或分叉时：工作区干净就直接 `git pull --rebase`；**有未提交改动**则先 `git stash push -u`，拉完 `git stash pop`（直接变基会被 git 拒绝：`不能变基式拉取：您的索引中包含未提交的变更`）。不要为了绕过这一步先提交再拉——闸门拦的正是落后状态下的提交，而且照样要解冲突。
+2. **先对远端**——`git fetch`，再看 `git status -sb`。落后或分叉时：工作区干净就直接 `git pull --rebase`；**有未提交改动**则先 `git stash push -u`，拉完 `git stash pop`（直接变基会被 git 拒绝：`不能变基式拉取：您的索引中包含未提交的变更`）。不要为了绕过这一步先提交再拉——闸门拦的正是落后状态下的提交，而且照样要解冲突。`git fetch` 因权限或网络失败时，先报告原因，并在报告里说明远端未核对；用户要求继续提交时再提交。
 3. **冲突清零**——`git status` 里不允许还有未解决冲突，处理见文末「失败与冲突」。
 4. **看改动**——`git status --short` 取清单，`git diff` 与 `git diff --cached` 逐行读；只看清单用 `git diff --stat`。
 5. **处理未纳管文件**——新文件要 `git add <路径>` 才进本次提交。**逐个 add，不要 `git add -A` 或 `git add .`**，那会把临时文件与产物目录一起带上。只 add 本次明确涉及、说得出来历的文件；来历不明的未跟踪文件不动也不删，在报告里列出来问用户要不要入库。

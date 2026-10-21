@@ -1,6 +1,6 @@
 ---
 name: comment-trimmer
-description: 当用户要求清理某个目录或模块里密集、冗长或噪音多的注释时使用。触发词包括"清理注释"、"注释太乱"、"注释太长"、"注释写了一大串"、"裁掉乱注释"、"去掉注释里的 emoji 和分割线"、"批量清理注释"、"scan this module for noisy comments"。也用于把超过篇幅上限的注释压短，以及审查只复述代码的注释。
+description: 当用户要求清理某个目录或模块里密集、冗长或噪音多的注释时使用。触发词包括"清理注释"、"注释太乱"、"注释太长"、"注释写了一大串"、"裁掉乱注释"、"去掉注释里的 emoji 和分割线"、"批量清理注释"、"scan this module for noisy comments"。
 model: inherit
 color: yellow
 tools: ["Read", "Grep", "Glob", "Edit", "Bash"]
@@ -19,7 +19,7 @@ tools: ["Read", "Grep", "Glob", "Edit", "Bash"]
 
 ## 适用规范
 
-判断标准以插件内 `skills/comment-trimming/references/trim-rules.md` 为准。开始前先读它，以及 `java-conventions.md` 或 `vue-js-conventions.md`（按目标语言选）。注释篇幅的数值出自 `chinese-writing` 插件的篇幅标准，符号规则同样以该插件为准，本插件只执行不复述。
+判断标准以插件内 `skills/comment-trimming/references/trim-rules.md` 为准。开始前先读它，以及 `java-conventions.md`、`vue-js-conventions.md` 或 `xml-sql-conventions.md`（按目标语言与文件类型选）。注释篇幅的数值出自 `chinese-writing` 插件的篇幅标准，符号规则同样以该插件为准，本插件只执行不复述。
 
 ## 工作流程
 
@@ -36,7 +36,7 @@ tools: ["Read", "Grep", "Glob", "Edit", "Bash"]
 
    **调用关系不算信息。** 注释里出现"由某服务写入""被某 Controller 调用""下游某 Handler 消费"这类关联描述，一律删——代码随时改，注释跟不上调用链。可以拿 `由`、`调用`、`上游`、`下游`、`消费` 抓候选，逐处判断它写的是本段自身还是别人。
 
-   **注释内的箭头属违规。** 注释里出现 `→`（或箭头区 `←` 到 `⇿`）要改写成文字，对照表见 `chinese-writing` 插件的符号规则。可以拿 `→` 抓候选，但逐处看位置：命中的多在字符串字面量与注解值里，那里是数据，一个字不动，只改注释内的。前端不用你扫符号——自定义 eslint 规则已在管这件事。
+   **注释内的箭头属违规。** 注释里出现 `→`（或箭头区 `←` 到 `⇿`）要改写成文字，对照表见 `chinese-writing` 插件的符号规则。可以拿 `→` 抓候选，但逐处看位置：命中的多在字符串字面量与注解值里，那里是数据，一个字不动，只改注释内的。前端项目若配了 `illegal-annotation` 规则，符号由 eslint 管，不用你扫；没配就按 `chinese-writing` 的符号规则检查注释。
 
    日期形式的变更履历注释（`// 20xx-xx-xx`）在存量项目里测得 0 处，不要为它写正则。
 
@@ -44,7 +44,7 @@ tools: ["Read", "Grep", "Glob", "Edit", "Bash"]
 3. **排除构建产物。** 跳过 `node_modules/`、`target/`、`dist/`、`build/`、`.git/`、`.svn/`。这些目录一律不动。注意 `target/classes/mapper/*.xml` 是构建产物副本，源文件在 `src/main/resources/mapper/`——只改源文件，改完不要碰 target。
 4. **出清单。** 按 `path:line: 类型: 内容摘要` 列出来，并给出总数与拟删除行数。**范围超过 10 个文件或 50 处时，先把清单交给用户确认再动手。**
 5. **裁剪。** 逐文件 `Edit`。同一次 `Edit` 只改连续区域，避免整文件重写。该删的删，该留的按篇幅标准压短。
-6. **验证。** 前端按 `vue-js-conventions.md` 指定文件跑 `npx eslint <目标文件>`；Java 确认无语法破坏。对比裁剪前后功能性指令数量。
+6. **验证。** 项目配了 eslint 时，按 `vue-js-conventions.md` 指定文件跑 `npx eslint <目标文件>`；Java 确认无语法破坏。对比裁剪前后功能性指令数量。
 7. **回报。**
 
 ## 铁律
@@ -73,7 +73,7 @@ tools: ["Read", "Grep", "Glob", "Edit", "Bash"]
 
 明细（仅列改动）：
   path:line  类型  摘要
-验证：前端指定文件 eslint 通过，Java 无语法错误
+验证：前端指定文件 eslint 通过（项目配了 eslint 时），Java 无语法错误
 未做：<明确列出没做的事>
 ```
 

@@ -1,6 +1,6 @@
 ---
 name: comment-trimming
-description: 编写、修改或审查 Java、Vue、JavaScript 代码时使用，保证注释符合团队稀疏且简短的规范；也用于用户说"注释太乱"、"注释太多"、"注释太长"、"注释写了一大串"、"注释密密麻麻"、"清理注释"、"裁剪注释"、"压缩注释"、"去掉 emoji"、"注释规范"的场合。
+description: 当编写、修改或审查 Java、Vue、JavaScript 代码，或处理 Mapper XML 与 SQL 注释时使用。触发词包括"注释太乱"、"注释太多"、"注释太长"、"注释写了一大串"、"注释密密麻麻"、"清理注释"、"裁剪注释"、"压缩注释"、"去掉 emoji"、"注释规范"。
 argument-hint: "[要处理的文件或目录]"
 allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 ---
@@ -66,6 +66,10 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 存量类头的旧写法（`@title`、`@description`、`@date`）是历史风格，改到该类时保持原样，不要整体重写成新模板——那是无意义的大 diff。新类用新模板。
 
 裁剪后自查：该文件里是否还留着乱注释、是否还有超过篇幅上限的长注释、是否还留着调用关系与调用链的注释、是否动了本次没编辑的文件、是否误删功能性指令、是否把存量 Javadoc 改成注解或反过来。
+
+## 边界
+
+只碰注释与空行。不改代码逻辑，不重构，不统一缩进或 import 顺序。单文件顺手裁剪由主线程按整文件做；整目录、整模块的存量清理才派 `comment-trimmer`。
 
 ## 存量批量清理
 
