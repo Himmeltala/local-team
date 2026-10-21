@@ -102,8 +102,7 @@ public class FakeThirdParty implements Closeable {
                 boolean readThisConnection = reading;
                 if (!readThisConnection) {
                     // 压小接收窗口，让发送方更快撞上写阻塞。
-                    // 窗口缩放是握手时按监听端谈定的，这里改的是已连接套接字，Linux 上有效但不是最稳的做法，
-                    // 想更可控就在 bind 之前把 ServerSocket 的接收缓冲设小。
+                    // 窗口缩放按监听端谈定，在 bind 前设 ServerSocket 接收缓冲更稳。
                     socket.setReceiveBufferSize(1024);
                 }
                 synchronized (connections) {

@@ -1,10 +1,10 @@
-# Vue / JS 注释做法
+# Vue 与 JS 注释做法
 
 团队前端项目靠自定义 eslint 插件强制，不用自觉。插件放在仓库内的 `.eslint-plugin-local/`，规则包括 `illegal-header-annotation`（文件头）与 `illegal-annotation`（注释符号）。
 
-**下面写的是规则的实际行为**，来自逐行读规则源码 + 实跑正则验证。不要照抄插件自带 README 的描述——那份说明与实现不一致，已核对出两处。新项目若带了同名的本地规则，先读它的源码确认行为再照做。
+**下面写的是规则的实际行为**，来自逐行读规则源码，并实跑正则验证。不要照抄插件自带 README 的描述——那份说明与实现不一致，已核对出两处。新项目若带了同名的本地规则，先读它的源码确认行为再照做。
 
-## 文件头注释块：src/ 下的 .vue / .js / .ts 必须有
+## 文件头注释块：`src/` 下的 `.vue`、`.js`、`.ts` 必须有
 
 ```html
 <!--
@@ -17,8 +17,8 @@
 -->
 ```
 
-- 适用范围是 `src/` 下的 `.vue` / `.js` / `.ts`，且跳过 `src/components/index.js`。仓库根的 `vite.config.js`、mock、`.eslint-plugin-local/*` 不在此列。
-- 六个字段 `Author` / `Date` / `LastEditors` / `LastEditTime` / `FilePath` / `Description` 缺一不可，顺序不能乱。缺失或乱序会被判 error，`--fix` 会**整块重建**。
+- 适用范围是 `src/` 下的 `.vue`、`.js`、`.ts`，且跳过 `src/components/index.js`。仓库根的 `vite.config.js`、mock、`.eslint-plugin-local/*` 不在此列。
+- 六个字段 `Author`、`Date`、`LastEditors`、`LastEditTime`、`FilePath`、`Description` 缺一不可，顺序不能乱。缺失或乱序会被判 error，`--fix` 会**整块重建**。
 - 重建时 `FilePath` 按文件真实路径生成、作者默认 `runnet`、历史作者会保留。所以不要手改或删除这一块，交给 `--fix`。
 - 日期必须是完整 `YYYY-MM-DD HH:MM:SS`。只写日期会被判 error，`--fix` 用文件时间补上时分秒。
 - **裁剪注释时不要动这一块**，两行长度上限也不适用它——`Description` 栏留空即可，不要顺手写一段说明。
@@ -53,7 +53,7 @@ npx eslint --fix <目标文件>
 ## 代码注释：保持轻
 
 - 只在非显然处写一行 `//`。组件文件里注释稍多就显得突兀，存量实测组件注释率远低于入口文件。
-- **一行为限，最多两行**，`//` 与 `<!-- -->` 都一样。写不完就别写，先想能不能靠变量名或组件拆分说清楚。
+- **篇幅按 `chinese-writing` 的篇幅标准执行**，`//` 与 `<!-- -->` 都一样。写不完就别写，先想能不能靠变量名或组件拆分说清楚。
 - 讲"为什么"，不讲"做什么"。
 - 模板里用 `<!-- -->`，只在结构不直观时才写，例如说明插槽用途、某个条件渲染的业务原因。不给每个 `div` 加中文说明；一句话讲完，不写"这里负责…同时还会…"这种成段的交代。
 - 该删的：
@@ -76,7 +76,7 @@ data.forEach((item) => { ... })
 
 ## 提交前自检
 
-- 没有遗留 `console.log` / `console.debug`
+- 没有遗留 `console.log`、`console.debug`
 - 没有为了对齐 Java 风格给 Vue 组件补 Javadoc 式注释——前端不做这个
 - 改动过的文件跑一遍 `npx eslint --fix <改动文件>`，别跑全仓
 

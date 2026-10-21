@@ -24,7 +24,7 @@
     },
     {
       "name": "comment-trimming",
-      "description": "注释规范：稀疏优先，默认可不写；只讲本段代码、不记调用链；篇幅一行最多两行；禁 emoji 与装饰分割线；编辑某个文件时顺手把该文件整文件清干净，另配 comment-trimmer 子代理做整目录的存量批量清理。",
+      "description": "注释规范：稀疏优先，默认可不写；只讲本段代码，不记调用链；篇幅短，最多两行；禁 emoji 与装饰分割线。编辑某个文件时，顺手把该文件整文件清干净；另配 comment-trimmer 子代理做整目录的存量批量清理。",
       "author": {
         "name": "Himmeltala"
       },
@@ -34,6 +34,7 @@
         "conventions",
         "java",
         "vue",
+        "javascript",
         "cleanup"
       ],
       "source": "./plugins/comment-trimming"
@@ -55,7 +56,7 @@
     },
     {
       "name": "code-testing",
-      "description": "把代码测通的三个技能：mock-testing 在进程外起模拟服务把链路跑通（划边界、抄契约、写模拟服务、三层验证、收尾还原，边界覆盖 HTTP 与 WebSocket、RPC、消息队列、数据库、文件、串口设备与时钟）；coverage-testing 在测试代码里写假对端做端到端测试，按未覆盖行补测把覆盖率拉到 90% 并连跑验稳；java-testing 记 Java 里写这类测试的 JUnit 5、surefire 与 JaCoCo 具体写法与坑。",
+      "description": "把代码测通的三个技能。mock-testing 在进程外起模拟服务把链路跑通，覆盖划边界、抄契约、写模拟服务、三层验证与收尾还原，边界覆盖 HTTP 与 WebSocket、RPC、消息队列、数据库、文件、串口设备与时钟。coverage-testing 在测试代码里写假对端做端到端测试，按未覆盖行补测把覆盖率拉到 90%，并连跑验稳。java-testing 记 Java 里写这类测试的 JUnit 5、surefire 与 JaCoCo 具体写法与坑。",
       "author": {
         "name": "Himmeltala"
       },
@@ -90,7 +91,7 @@
     },
     {
       "name": "code-shaping",
-      "description": "编码思维：写之前先找项目已有的机制与公共函数；一个函数一件事，过长就拆；胶水代码优先泛化；模式用来隔离变化点；同时不许过度抽象（只有一处用到的不抽，抽象比调用处还长就退回）。",
+      "description": "编码思维：写之前先找项目已有的机制与公共函数。一个函数一件事，过长就拆。胶水代码优先泛化。模式用来隔离变化点，同时不许过度抽象：只有一处用到的不抽，抽象比调用处还长就退回。",
       "author": {
         "name": "Himmeltala"
       },

@@ -33,4 +33,4 @@ claude plugin install code-shaping@local-team -s project
 - 说"这段代码怎么拆"、"写得太长了"、"能不能复用"、"这里要不要上设计模式" —— 触发规则
 - `/code-shaping:code-shaping` —— 显式走一遍判断清单
 
-条目都是判断角度，不是硬性规定；按条款硬写代码反而别脚。
+条目都是判断角度，不是硬性规定。按条款硬写代码反而别扭。

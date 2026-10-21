@@ -15,7 +15,7 @@
 改造办法：
     1. 把 dispatch 里的路由换成被测方真正会调到的，其余一律兜底 404。
     2. 返回体形状照被替掉的那份源码抄，成功与失败两种都要有。
-    3. 默认只挂了 GET 与 POST。对端还用到 PUT、DELETE 时，照着补同名 do_ 方法。
+    3. PUT 与 DELETE 已接到 dispatch，但没配路由。对端还用到时，照着补对应分支。
 """
 import argparse
 import json

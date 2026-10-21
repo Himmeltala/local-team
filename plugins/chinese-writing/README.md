@@ -32,4 +32,4 @@ claude plugin install chinese-writing@local-team -s project
 - 说"这句话中文不通""缺介词""符号别当代替""这是翻译腔" —— 触发规则
 - `/chinese-writing:chinese-writing` —— 显式走一遍规则
 
-篇幅数值（回复精简、注释一行最多两行、提交信息一行、文档不限长）只写在本插件的篇幅标准里，`comment-trimming` 与 `commit-guarding` 只指认。
+篇幅数值（回复精简、注释最多两行、提交信息一行、文档不限长）以本插件的篇幅标准为准，`comment-trimming` 与 `commit-guarding` 的技能文档只指认。

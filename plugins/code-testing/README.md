@@ -46,4 +46,4 @@ claude plugin install code-testing@local-team
 
 分工的边界：**mock-testing 管进程外的模拟服务，coverage-testing 管进程内的假对端**。前者手工验一遍、摸清链路形状，后者把形状固化成能回归的用例。java-testing 只讲语言与构建工具的具体写法，不重复前两个的方法。
 
-模板以 Linux 加 JVM 或 Python 3 标准库为前提，不引第三方依赖。`java-testing/examples/` 的两份骨架改掉包名即可照抄；其余边界类型照参考资料里的套路写。
+模板以 Linux 与 JVM 或 Python 3 标准库为前提，不引第三方依赖。`java-testing/examples/` 的两份骨架改掉包名即可照抄；其余边界类型照参考资料里的套路写。

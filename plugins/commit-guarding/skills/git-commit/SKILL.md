@@ -40,9 +40,9 @@ allowed-tools: [Bash, Read, Grep, Glob]
 <type>: <中文描述>
 ```
 
-只有一行，前缀后面不加范围括号，冒号用半角，描述用中文，整行 50 字以内。一行说不清说明这次提交装的事太多，**拆成多次提交，每次一行**。
+只有一行，前缀后面不加范围括号，冒号用半角，描述用中文。一行说不清说明这次提交装的事太多，**拆成多次提交，每次一行**。
 
-格式细则、前缀含义与更多正反例见 `../svn-commit/references/commit-message-format.md`——git 与 SVN 共用同一套格式，只有提交命令不同。
+整行长度、前缀含义与更多正反例见 `../svn-commit/references/commit-message-format.md`——git 与 SVN 共用同一套格式，只有提交命令不同。
 
 ## 闸门拦哪四类
 

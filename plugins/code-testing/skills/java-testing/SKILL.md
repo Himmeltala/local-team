@@ -15,7 +15,7 @@ allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 
 ## 四步
 
-1. **认环境。** 看 pom 或 build.gradle：测试依赖是 `spring-boot-starter-test` 还是手写的 `junit-jupiter`；surefire 是哪个版本；有没有 JaCoCo 插件。版本决定写法，尤其 surefire 低于 2.22 时 JUnit 5 根本不会被跑（测试全绿但一条没执行）。
+1. **认环境。** 看 pom 或 build.gradle，确认测试依赖是 `spring-boot-starter-test` 还是手写的 `junit-jupiter`，surefire 是哪个版本，有没有 JaCoCo 插件。版本决定写法，尤其 surefire 低于 2.22 时 JUnit 5 根本不会被跑（测试全绿但一条没执行）。
 2. **写用例。** JUnit 5 下测试类与方法包私有即可，不必 `public`。方法名直接写断言的行为，中文也行。每条用例自己造环境、自己收尾，用 `@AfterEach` 兜住清理。进程内假对端与测试基建的骨架见 `examples/`，改掉包名即可照抄。
 3. **跑一遍。** `mvn -B test`。看的是用例数与耗时，不是退出码：失败会打印，**一条都没跑起来却显示 BUILD SUCCESS 才是真麻烦**。
 4. **量覆盖率。** 先拿基线再补测。JaCoCo 可以不改 pom、用命令行直接调，见 `references/surefire-and-jacoco.md`。

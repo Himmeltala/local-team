@@ -21,7 +21,7 @@ allowed-tools: [Bash, Read, Grep, Glob]
 
 ## 提交流程
 
-**闸门：先 `svn update`，冲突清零。** 这两件事没做完，不要执行 `svn commit`。插件的 PreToolUse 钩子（`hooks/scripts/svn-commit-guard.sh`）提交前会跑一次 `svn status -u`：落后于服务器、或 `svn status` 里还有标 `C` 的文件，直接以退出码 2 拦下并打回原因；`-m` / `--message` / `-F` 文件首行里出现 `feat(xxx):` 这种带范围括号的前缀，同样拦下。钩子只拦不改，工作副本由你按下面步骤处理。
+**闸门：先 `svn update`，冲突清零。** 这两件事没做完，不要执行 `svn commit`。插件的 PreToolUse 钩子（`hooks/scripts/svn-commit-guard.sh`）提交前会跑一次 `svn status -u`：落后于服务器、或 `svn status` 里还有标 `C` 的文件，直接以退出码 2 拦下并说明原因；`-m` / `--message` / `-F` 文件首行里出现 `feat(xxx):` 这种带范围括号的前缀，同样拦下。钩子只拦不改，工作副本由你按下面步骤处理。
 
 1. **确认位置**——`svn info` 看 URL 与版本，确认目录属于哪个工作副本。
 2. **先更新**——`svn update`。不能省，也不能等提交报错了再补。
@@ -38,7 +38,7 @@ allowed-tools: [Bash, Read, Grep, Glob]
 <type>: <中文描述>
 ```
 
-只有一行，前缀后面不加范围括号，冒号用半角，描述用中文，整行 50 字以内。一行说不清就拆成多次提交。前缀含义、更多正反例见 `references/commit-message-format.md`。
+只有一行，前缀后面不加范围括号，冒号用半角，描述用中文。一行说不清就拆成多次提交。整行长度、前缀含义与更多正反例见 `references/commit-message-format.md`。
 
 ## 命令速查
 
@@ -46,7 +46,7 @@ allowed-tools: [Bash, Read, Grep, Glob]
 
 | 目的 | 命令 |
 |---|---|
-| 是否落后服务器 / 有无冲突 | `svn status -u`（提交闸门跑的就是它） |
+| 是否落后服务器、有无冲突 | `svn status -u`（提交闸门跑的就是它） |
 | 近期历史 | `svn log -l 10` |
 | 某行是谁改的 | `svn blame <file>` |
 | 撤销本地改动 | `svn revert <path>`（不可恢复，先确认） |
