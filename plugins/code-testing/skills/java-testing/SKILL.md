@@ -22,7 +22,7 @@ allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 
 ## 与 coverage-testing 的分界
 
-本技能只管 Java 与构建工具的具体写法：认环境、写用例、跑 `mvn test`、量覆盖率、排 surefire 与 JaCoCo 的坑。测试怎么设计、覆盖率怎么补，一律归 `coverage-testing` 技能，本技能不复述。
+本技能只管 Java 与构建工具的具体写法：认环境、写用例、跑 `mvn test`、量覆盖率、排 surefire 与 JaCoCo 的坑。测试怎么设计、覆盖率怎么补，一律归 `coverage-testing` 技能；测试用例表、测试报告与执行截图归 `test-reporting` 技能，本技能不复述。
 
 ## 三条硬规矩
 
