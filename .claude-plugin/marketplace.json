@@ -56,7 +56,7 @@
     },
     {
       "name": "code-testing",
-      "description": "把代码测通的三个技能。mock-testing 在进程外起模拟服务把链路跑通，覆盖划边界、抄契约、写模拟服务、三层验证与收尾还原，边界覆盖 HTTP 与 WebSocket、RPC、消息队列、数据库、文件、串口设备与时钟。coverage-testing 在测试代码里写假对端做端到端测试，按未覆盖行补测把覆盖率拉到 90%，并连跑验稳。java-testing 记 Java 里写这类测试的 JUnit 5、surefire 与 JaCoCo 具体写法与坑。",
+      "description": "把代码测通的四个技能。mock-testing 在进程外起模拟服务把链路跑通，覆盖划边界、抄契约、写模拟服务、三层验证与收尾还原，边界覆盖 HTTP 与 WebSocket、RPC、消息队列、数据库、文件、串口设备与时钟。coverage-testing 在测试代码里写假对端做端到端测试，按未覆盖行补测把覆盖率拉到 90%，并连跑验稳。java-testing 记 Java 里写这类测试的 JUnit 5、surefire 与 JaCoCo 具体写法与坑。test-reporting 负责测试用例表、测试报告、终端截图与结果回填。",
       "author": {
         "name": "Himmeltala"
       },
@@ -69,7 +69,11 @@
         "jacoco",
         "junit",
         "java",
-        "fault-injection"
+        "fault-injection",
+        "test-report",
+        "xlsx",
+        "docx",
+        "screenshot"
       ],
       "source": "./plugins/code-testing"
     },

@@ -1,10 +1,16 @@
 {
   "name": "bug-tracing",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "问题排查插件：先沿代码调用链逐段核对，逻辑排除干净后再查数据源，需要时经授权连库取部分数据作证。数据库只读，结论只在会话里给。",
   "author": {
     "name": "Himmeltala"
   },
-  "keywords": ["debugging", "tracing", "call-chain", "data-source", "sql"],
+  "keywords": [
+    "debugging",
+    "tracing",
+    "call-chain",
+    "data-source",
+    "sql"
+  ],
   "license": "UNLICENSED"
 }
