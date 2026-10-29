@@ -71,6 +71,7 @@
         "java",
         "fault-injection",
         "test-report",
+        "test-case",
         "xlsx",
         "docx",
         "screenshot"
@@ -108,6 +109,39 @@
         "design-patterns"
       ],
       "source": "./plugins/code-shaping"
+    },
+    {
+      "name": "output-guard",
+      "description": "AI 输出规范：按场景套用固定回复结构，排查与故障结论按现象、根因、证据、影响范围、修复方向组织；代码改动说明按改了什么、为什么、影响范围、验证方式组织；进度与结果汇报按已完成、未完成或受阻、下一步组织。同时约束输出侧 token：结论先行、不复述问题、只给相关片段、分轮输出。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "workflow",
+      "keywords": [
+        "reply",
+        "template",
+        "report",
+        "troubleshooting",
+        "output",
+        "token"
+      ],
+      "source": "./plugins/output-guard"
+    },
+    {
+      "name": "input-guard",
+      "description": "AI 输入检查：用户发来任务、代码、日志、数据时，先查敏感信息并建议脱敏，再补全目标、范围、期望结果、约束与验收标准，最后从输入源头控制 token：用路径代替整文件、日志只留关键行、大任务拆小。只管输入侧，不压缩 AI 回复。",
+      "author": {
+        "name": "Himmeltala"
+      },
+      "category": "workflow",
+      "keywords": [
+        "input",
+        "privacy",
+        "security",
+        "prompt",
+        "token"
+      ],
+      "source": "./plugins/input-guard"
     }
   ]
 }
