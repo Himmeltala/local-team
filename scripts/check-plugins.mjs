@@ -38,6 +38,7 @@ async function runPlugin(plugin) {
   check(pkg.version === manifest.version, `${plugin} 版本一致 ${pkg.version}`)
   check(pkg.name === `dsh-local-team-${plugin}`, `${plugin} 包名 ${pkg.name}`)
   check(pkg.dsh?.bundle?.patch === './cordis.patch.yml', `${plugin} 声明 dsh.bundle`)
+  check(pkg.files?.includes('cordis.patch.yml') === true, `${plugin} 打包带 cordis.patch.yml`)
 
   const provider = {}
   const listener = {}
