@@ -9,7 +9,7 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 
 本技能管代码内部的注释；文件头与类头注释的写法见 `header-comment` 技能。
 
-用户调用时带了参数：`$ARGUMENTS`
+用户调用时带了参数，参数在用户消息里（Claude 端也会填进 `$ARGUMENTS`）。
 
 - 参数是文件：清该文件的注释，整文件范围。
 - 参数是目录：这是存量批量清理，交给子代理，先出清单再动手。Claude 派 `comment-trimmer`；DSH 用 `subagent` 工具，任务说明取 `../../agents/comment-trimmer.md`。
