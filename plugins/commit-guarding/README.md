@@ -30,9 +30,10 @@ claude plugin install commit-guarding@local-team -s project
 DSH 侧是同一个目录的另一重身份，技能由包内 `lib/index.js` 注册：
 
 ```bash
-dsh plugin --profile web add ./plugins/commit-guarding   # 源码目录
-dsh plugin --profile web add dsh-local-team-commit-guarding   # 发布到 npm 后
+dsh plugin --profile web add github:Himmeltala/local-team#path:/plugins/commit-guarding
 ```
+
+改源码时换成 `./plugins/commit-guarding`。
 
 市场源地址、缓存机制与更新方式见仓库根目录的 `README.md`。
 

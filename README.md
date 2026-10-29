@@ -58,37 +58,26 @@ claude plugin install code-testing@local-team
 
 ### DSH
 
-源码目录直接装，不必先发布：
+DSH 自带插件安装，不用先发 npm，也不走上架：仓库已公开，直接从 GitHub 子目录装。
+
+```bash
+dsh plugin --profile web add github:Himmeltala/local-team#path:/plugins/commit-guarding
+```
+
+改源码时用本地路径，改动立即生效：
 
 ```bash
 dsh plugin --profile web add ./plugins/commit-guarding
 ```
 
-发布到 npm 后按包名装：
-
-```bash
-dsh plugin --profile web add dsh-local-team-commit-guarding
-```
+以后发布到 npm 后，命令换成包名 `dsh-local-team-commit-guarding`。
 
 DSH 侧由 `lib/index.js` 把包内 `skills/` 注册成技能，装完即用，不需要往 `~/.dsh/skills` 拷贝。`commit-guarding` 的提交闸门由 `lib/guard.js` 在 bash 调用前复跑同一批脚本；Claude 的 `hooks.json` 与 `agents/` 不参与 DSH。
 
 以前用软链把技能挂进 `~/.dsh/skills` 的，切到包安装后先删掉对应软链，否则同名技能按 rank 仍然命中软链那份。
 
-### 上架 DSH 市场
+dshmarket 的列表只读 awesome-dsh-plugin 的目录，收录要向上游提 PR；本仓库不走那条路，市场里搜不到，不影响安装。
 
-市场列表来自 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)，向那边提 PR，一个插件一个 YAML 文件，放在 `data/plugins/` 下：
-
-```yaml
-# data/plugins/Himmeltala__local-team--plugins-commit-guarding.yml
-url: https://github.com/Himmeltala/local-team/tree/main/plugins/commit-guarding
-name: Himmeltala/local-team#commit-guarding
-category: git
-description:
-  en: One-line description ending with a period.
-  zh: 一句话描述，以句号结尾。
-```
-
-一个 PR 最多 3 条；仓库要打 `dsh-plugin` topic、创建满 1 天。npm 发布是可选的，发了市场才会显示版本与下载量。
 
 ## 使用
 
