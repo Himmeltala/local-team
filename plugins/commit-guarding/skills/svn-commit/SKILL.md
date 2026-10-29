@@ -39,7 +39,7 @@ allowed-tools: [Bash, Read, Grep, Glob]
 <type>: <中文描述>
 ```
 
-只有一行，前缀后面不加范围括号，冒号用半角，描述用中文。一行说不清就拆成多次提交。整行长度、前缀含义与更多正反例见 `references/commit-message-format.md`。
+只有一行，前缀后面不加范围括号，冒号用半角，描述用中文。一行说不清就拆成多次提交。整行长度、前缀含义与更多正反例见 `../../references/commit-message-format.md`。
 
 ## 命令速查
 
@@ -84,6 +84,6 @@ allowed-tools: [Bash, Read, Grep, Glob]
 
 ## 附加资源
 
-- `references/commit-message-format.md`——前缀含义、单行写法、更多正反例。
+- `../../references/commit-message-format.md`——前缀含义、单行写法、更多正反例（与 `git-commit` 共用）。
 
 改代码时同时遵守注释规范，见 `comment-trimming` 插件。

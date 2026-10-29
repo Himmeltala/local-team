@@ -24,15 +24,12 @@ allowed-tools: [Bash, Read, Grep, Glob]
 
 **闸门：提交前先拉最新。** 本地落后于远端、或与远端分叉时，`git commit` 会被本插件的 PreToolUse 钩子拦下（退出码 2）。这是插件级钩子，不是仓库里的 `.git/hooks`，`ls .git/hooks` 里看不到，别拿它判断闸门在不在；没装本插件的环境没有这道兜底。钩子只拦不改，`fetch` 与 `pull --rebase` 仍由你手工做完。
 
-1. **确认位置**——`git rev-parse --is-inside-work-tree`，`git status -sb` 看当前分支与上下游差多少。
-2. **先对远端**——`git fetch`，再看 `git status -sb`。落后或分叉时：工作区干净就直接 `git pull --rebase`；**有未提交改动**则先 `git stash push -u`，拉完 `git stash pop`（直接变基会被 git 拒绝：`不能变基式拉取：您的索引中包含未提交的变更`）。不要为了绕过这一步先提交再拉——闸门拦的正是落后状态下的提交，而且照样要解冲突。`git fetch` 因权限或网络失败时，先报告原因，并在报告里说明远端未核对；用户要求继续提交时再提交。
-3. **冲突清零**——`git status` 里不允许还有未解决冲突，处理见文末「失败与冲突」。
-4. **看改动**——`git status --short` 取清单，`git diff` 与 `git diff --cached` 逐行读；只看清单用 `git diff --stat`。
-5. **处理未纳管文件**——新文件要 `git add <路径>` 才进本次提交。**逐个 add，不要 `git add -A` 或 `git add .`**，那会把临时文件与产物目录一起带上。只 add 本次明确涉及、说得出来历的文件；来历不明的未跟踪文件不动也不删，在报告里列出来问用户要不要入库。
-6. **自检**——查调试残留（`console.log`、`debugger`、注释掉的旧代码）、误改的配置文件、混入的 `node_modules/` 或 `dist/` 或 `out/`。
-7. **写提交信息**——单行，见下节。
-8. **提交**——`git commit -m "<信息>"`，需要限定范围时显式列路径；提交后用 `git log --oneline -1` 与 `git status -sb` 核对落在预期分支上。
-9. **推送**——用户明确要求时才 `git push`；推完 `git status -sb` 应当与远端一致。
+1. **确认位置**——`git rev-parse --is-inside-work-tree`、`git status -sb`，看分支与上下游差多少。
+2. **对齐远端**——`git fetch`，再看 `git status -sb`。落后或分叉时：工作区干净就 `git pull --rebase`；**有未提交改动**先 `git stash push -u`，拉完 `git stash pop`（直接变基会被拒绝：`不能变基式拉取：您的索引中包含未提交的变更`）。不要先提交再拉——闸门拦的正是落后状态下的提交。冲突未清零不往下走，处理见「失败与冲突」。`fetch` 因权限或网络失败时，先报告并说明远端未核对；用户要求继续再提交。
+3. **看改动并暂存**——`git status --short` 取清单，`git diff`、`git diff --cached` 逐行读（只看清单用 `git diff --stat`）。新文件**逐个 `git add <路径>`，不要 `git add -A` 或 `git add .`**；只 add 说得出来历的文件，来历不明的未跟踪文件不动也不删，在报告里问用户。
+4. **自检**——查调试残留（`console.log`、`debugger`、注释掉的旧代码）、误改的配置文件、混入的 `node_modules/` 或 `dist/` 或 `out/`。
+5. **写信息并提交**——单行，见下节。`git commit -m "<信息>"`，需要限定范围时显式列路径；提交后用 `git log --oneline -1` 与 `git status -sb` 核对落在预期分支上。
+6. **推送**——用户明确要求时才 `git push`；推完 `git status -sb` 应与远端一致。
 
 ## 提交信息：只有一行
 
@@ -42,7 +39,7 @@ allowed-tools: [Bash, Read, Grep, Glob]
 
 只有一行，前缀后面不加范围括号，冒号用半角，描述用中文。一行说不清说明这次提交装的事太多，**拆成多次提交，每次一行**。
 
-整行长度、前缀含义与更多正反例见 `../svn-commit/references/commit-message-format.md`——git 与 SVN 共用同一套格式，只有提交命令不同。
+整行长度、前缀含义与更多正反例见 `../../references/commit-message-format.md`——git 与 SVN 共用同一套格式，只有提交命令不同。
 
 ## 闸门拦哪四类
 
