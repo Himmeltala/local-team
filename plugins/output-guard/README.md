@@ -26,6 +26,13 @@ claude plugin install output-guard@local-team
 claude plugin install output-guard@local-team -s project
 ```
 
+DSH 侧是同一个目录的另一重身份，技能由包内 `lib/index.js` 注册：
+
+```bash
+dsh plugin --profile web add ./plugins/output-guard   # 源码目录
+dsh plugin --profile web add dsh-local-team-output-guard   # 发布到 npm 后
+```
+
 市场源地址、缓存机制与更新方式见仓库根目录的 `README.md`。
 
 ## 使用

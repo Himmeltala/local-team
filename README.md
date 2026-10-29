@@ -15,6 +15,10 @@
 
 ## 安装
 
+每个插件目录同时是 Claude Code 插件和 npm 包：`.claude-plugin/`、`hooks/`、`agents/` 给 Claude，`package.json`、`cordis.patch.yml`、`lib/` 给 DSH，`skills/` 两边共用同一份文件。`package.json` 与 `.claude-plugin/plugin.json` 的 version 必须一起改，前者决定 npm 版本，后者决定 Claude 的缓存目录。
+
+### Claude Code
+
 市场源是 GitHub 上的 `Himmeltala/local-team` 仓库，本机工作副本在 `~/pros/self/local-team`：
 
 ```bash
@@ -51,6 +55,40 @@ claude plugin install code-testing@local-team
 更早的两个旧名（`svn-team-conventions`、`svn-workflow`）同样先卸后装。
 
 `mock-testing` 改名为 `code-testing` 后，技能拆成四个，原来的 `mock-testing:mock-testing` 变成 `code-testing:mock-testing`。
+
+### DSH
+
+源码目录直接装，不必先发布：
+
+```bash
+dsh plugin --profile web add ./plugins/commit-guarding
+```
+
+发布到 npm 后按包名装：
+
+```bash
+dsh plugin --profile web add dsh-local-team-commit-guarding
+```
+
+DSH 侧由 `lib/index.js` 把包内 `skills/` 注册成技能，装完即用，不需要往 `~/.dsh/skills` 拷贝。`commit-guarding` 的提交闸门由 `lib/guard.js` 在 bash 调用前复跑同一批脚本；Claude 的 `hooks.json` 与 `agents/` 不参与 DSH。
+
+以前用软链把技能挂进 `~/.dsh/skills` 的，切到包安装后先删掉对应软链，否则同名技能按 rank 仍然命中软链那份。
+
+### 上架 DSH 市场
+
+市场列表来自 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)，向那边提 PR，一个插件一个 YAML 文件，放在 `data/plugins/` 下：
+
+```yaml
+# data/plugins/Himmeltala__local-team--plugins-commit-guarding.yml
+url: https://github.com/Himmeltala/local-team/tree/main/plugins/commit-guarding
+name: Himmeltala/local-team#commit-guarding
+category: git
+description:
+  en: One-line description ending with a period.
+  zh: 一句话描述，以句号结尾。
+```
+
+一个 PR 最多 3 条；仓库要打 `dsh-plugin` topic、创建满 1 天。npm 发布是可选的，发了市场才会显示版本与下载量。
 
 ## 使用
 
