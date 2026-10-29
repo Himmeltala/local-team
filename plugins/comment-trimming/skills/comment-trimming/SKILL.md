@@ -12,7 +12,7 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 用户调用时带了参数：`$ARGUMENTS`
 
 - 参数是文件：清该文件的注释，整文件范围。
-- 参数是目录：这是存量批量清理，交给 `comment-trimmer` 子代理，先出清单再动手。
+- 参数是目录：这是存量批量清理，交给子代理，先出清单再动手。Claude 派 `comment-trimmer`；DSH 用 `subagent` 工具，任务说明取 `../../agents/comment-trimmer.md`。
 - 无参数：当前任务里正常遵守规范；本次编辑碰到的文件，按整文件范围顺手清干净。
 
 ## 五条硬规矩
@@ -73,7 +73,7 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 
 ## 存量批量清理
 
-整目录、整模块的注释清理交给 `comment-trimmer` 子代理。它先出清单再动手，并跳过 `node_modules/`、`target/`、`dist/`。
+整目录、整模块的注释清理交给子代理。Claude 用 `comment-trimmer`，DSH 用 `subagent` 工具带上 `../../agents/comment-trimmer.md` 的说明。它先出清单再动手，并跳过 `node_modules/`、`target/`、`dist/`。
 
 ## 附加资源
 
