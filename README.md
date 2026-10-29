@@ -78,6 +78,8 @@ DSH 侧由 `lib/index.js` 把包内 `skills/` 注册成技能，装完即用，�
 
 dshmarket 的列表只读 awesome-dsh-plugin 的目录，收录要向上游提 PR；本仓库不走那条路，市场里搜不到，不影响安装。
 
+改动后跑 `node scripts/check-plugins.mjs`，它校验版本一致、包名、技能数量与提交闸门。
+
 
 ## 使用
 
